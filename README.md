@@ -3,6 +3,7 @@
 
 - docker (https://docs.docker.com/install/)
 - docker-compose (https://docs.docker.com/compose/install/)
+- Node.js (https://nodejs.org/en/download/)
 
 ## Run DIRT on a local Ganache testnet
 
