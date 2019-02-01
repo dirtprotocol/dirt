@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "deploy": "docker-compose run contracts npm run migrate",
+    "unpause": "docker-compose unpause ganache",
+    "pause": "docker-compose pause ganache",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
