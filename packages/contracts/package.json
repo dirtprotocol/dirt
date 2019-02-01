@@ -1,0 +1,22 @@
+{
+  "name": "@dirt/contracts",
+  "version": "0.1.0",
+  "description": "Smart Contracts for Entity Protocol",
+  "main": "index.js",
+  "scripts": {
+    "prepublish": "",
+    "watch": "./node_modules/.bin/onchange -i -d 1000 '**/*.sol' --wait -- npm run build",
+    "watch:migrate": "npm run watch",
+    "build": "./node_modules/.bin/truffle compile",
+    "blockchain:init": "geth --datadir=./chaindata/ init ./genesis.json",
+    "blockchain:start": "geth --datadir=./chaindata/ --rpc --nodiscover",
+    "clean": "rm -rf ./build"
+  },
+  "author": "Team DIRT",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "onchange": "^4.0.0",
+    "openzeppelin-solidity": "EntityProtocol/openzeppelin-solidity",
+    "truffle": "5.0.3"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "@dirt/contracts-test",
+  "version": "0.1.0",
+  "description": "Protocol Test Contracts",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "clean": "rm -rf ./build",
+    "prepublish": "",
+    "build": "npm run build:compile",
+    "build:dev": "npx onchange '../contracts/**/*.sol' '**/*.sol' -i -w -d 1000 -- npm run build",
+    "build:compile": "./node_modules/.bin/truffle compile",
+    "build:watch": "npx onchange '../contracts/**/*.sol' '**/*.sol' -i -w -d 1000 -- npm run build:compile",
+    "migrate": "./node_modules/.bin/truffle migrate --reset --network local_ganache",
+    "test": "./node_modules/.bin/truffle test --network local_ganache",
+    "debug:contract": "./node_modules/.bin/truffle debug --network local_ganache"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@dirt/contracts": "^0.1.0",
+    "@dirt/lib": "^0.2.0",
+    "bignumber.js": "github:frozeman/bignumber.js-nolookahead",
+    "onchange": "^4.0.0",
+    "openzeppelin-solidity": "EntityProtocol/openzeppelin-solidity",
+    "truffle": "^5.0.3",
+    "truffle-contract": "^3.0.5"
+  },
+  "dependencies": {
+    "moment": "^2.22.1"
+  }
+}

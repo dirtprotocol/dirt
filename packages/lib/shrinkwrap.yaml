@@ -1,0 +1,447 @@
+dependencies:
+  '@dirt/contracts': 0.1.1
+  '@types/web3': 1.0.14
+  bignumber.js: github.com/frozeman/bignumber.js-nolookahead/57692b3ecfc98bbdd6b3a516cb2353652ea49934
+  ethereumjs-abi: 0.6.6
+  truffle-contract: 3.0.7
+  tslib: 1.9.3
+devDependencies:
+  '@types/bignumber.js': 5.0.0
+  typescript: 3.3.1
+packages:
+  /@dirt/contracts/0.1.1:
+    dev: false
+    resolution:
+      integrity: sha512-HkbXNjIQn6p8N12btnd/dNtypb0qywmOJiPhO42+dK5ln7E3te6gYxn323N+CgnDri6HWdKtE+2gDpwaq1nUGg==
+  /@types/bignumber.js/5.0.0:
+    dependencies:
+      bignumber.js: 8.0.2
+    deprecated: 'This is a stub types definition for bignumber.js (https://github.com/MikeMcl/bignumber.js/). bignumber.js provides its own type definitions, so you don''t need @types/bignumber.js installed!'
+    dev: true
+    resolution:
+      integrity: sha512-0DH7aPGCClywOFaxxjE6UwpN2kQYe9LwuDQMv+zYA97j5GkOMo8e66LYT+a8JYU7jfmUFRZLa9KycxHDsKXJCA==
+  /@types/bn.js/4.11.4:
+    dependencies:
+      '@types/node': 10.12.19
+    dev: false
+    resolution:
+      integrity: sha512-AO8WW+aRcKWKQAYTfKLzwnpL6U+TfPqS+haRrhCy5ff04Da8WZud3ZgVjspQXaEXJDcTlsjUEVvL39wegDek5w==
+  /@types/node/10.12.19:
+    dev: false
+    resolution:
+      integrity: sha512-2NVovndCjJQj6fUUn9jCgpP4WSqr+u1SoUZMZyJkhGeBFsm6dE46l31S7lPUYt9uQ28XI+ibrJA1f5XyH5HNtA==
+  /@types/underscore/1.8.9:
+    dev: false
+    resolution:
+      integrity: sha512-vfzZGgZKRFy7KEWcBGfIFk+h6B+thDCLfkD1exMBMRlUsx2icA+J6y4kAbZs/TjSTeY1duw89QUU133TSzr60Q==
+  /@types/web3/1.0.14:
+    dependencies:
+      '@types/bn.js': 4.11.4
+      '@types/underscore': 1.8.9
+    dev: false
+    resolution:
+      integrity: sha512-N841xEBVwg0QNin3Zu+Yf7eEKKeJ0MROMc+FvfgtX8r/fwynFhSZVj3VONVcr9QP/Wffq+aggj+4lgrvG3lnFQ==
+  /ajv/5.5.2:
+    dependencies:
+      co: 4.6.0
+      fast-deep-equal: 1.1.0
+      fast-json-stable-stringify: 2.0.0
+      json-schema-traverse: 0.3.1
+    dev: false
+    resolution:
+      integrity: sha1-c7Xuyj+rZT49P5Qis0GtQiBdyWU=
+  /bignumber.js/8.0.2:
+    dev: true
+    resolution:
+      integrity: sha512-EiuvFrnbv0jFixEQ9f58jo7X0qI2lNGIr/MxntmVzQc5JUweDSh8y8hbTCAomFtqwUPIOWcLXP0VEOSZTG7FFw==
+  /bindings/1.4.0:
+    dependencies:
+      file-uri-to-path: 1.0.0
+    dev: false
+    resolution:
+      integrity: sha512-7znEVX22Djn+nYjxCWKDne0RRloa9XfYa84yk3s+HkE3LpDYZmhArYr9O9huBoHY3/oXispx5LorIX7Sl2CgSQ==
+  /bip66/1.1.5:
+    dependencies:
+      safe-buffer: 5.1.2
+    dev: false
+    resolution:
+      integrity: sha1-AfqHSHhcpwlV1QESF9GzE5lpyiI=
+  /bn.js/4.11.6:
+    dev: false
+    resolution:
+      integrity: sha1-UzRK2xRhehP26N0s4okF0cC6MhU=
+  /bn.js/4.11.8:
+    dev: false
+    resolution:
+      integrity: sha512-ItfYfPLkWHUjckQCk8xC+LwxgK8NYcXywGigJgSwOP8Y2iyWT4f2vsZnoOXTTbo+o5yXmIUJ4gn5538SO5S3gA==
+  /brorand/1.1.0:
+    dev: false
+    resolution:
+      integrity: sha1-EsJe/kCkXjwyPrhnWgoM5XsiNx8=
+  /browserify-aes/1.2.0:
+    dependencies:
+      buffer-xor: 1.0.3
+      cipher-base: 1.0.4
+      create-hash: 1.2.0
+      evp_bytestokey: 1.0.3
+      inherits: 2.0.3
+      safe-buffer: 5.1.2
+    dev: false
+    resolution:
+      integrity: sha512-+7CHXqGuspUn/Sl5aO7Ea0xWGAtETPXNSAjHo48JfLdPWcMng33Xe4znFvQweqc/uzk5zSOI3H52CYnjCfb5hA==
+  /buffer-xor/1.0.3:
+    dev: false
+    resolution:
+      integrity: sha1-JuYe0UIvtw3ULm42cp7VHYVf6Nk=
+  /cipher-base/1.0.4:
+    dependencies:
+      inherits: 2.0.3
+      safe-buffer: 5.1.2
+    dev: false
+    resolution:
+      integrity: sha512-Kkht5ye6ZGmwv40uUDZztayT2ThLQGfnj/T71N/XzeZeo3nf8foyW7zGTsPYkEya3m5f3cAypH+qe7YOrM1U2Q==
+  /co/4.6.0:
+    dev: false
+    engines:
+      iojs: '>= 1.0.0'
+      node: '>= 0.12.0'
+    resolution:
+      integrity: sha1-bqa989hTrlTMuOR7+gvz+QMfsYQ=
+  /create-hash/1.2.0:
+    dependencies:
+      cipher-base: 1.0.4
+      inherits: 2.0.3
+      md5.js: 1.3.5
+      ripemd160: 2.0.2
+      sha.js: 2.4.11
+    dev: false
+    resolution:
+      integrity: sha512-z00bCGNHDG8mHAkP7CtT1qVu+bFQUPjYq/4Iv3C3kWjTFV10zIjfSoeqXo9Asws8gwSHDGj/hl2u4OGIjapeCg==
+  /create-hmac/1.1.7:
+    dependencies:
+      cipher-base: 1.0.4
+      create-hash: 1.2.0
+      inherits: 2.0.3
+      ripemd160: 2.0.2
+      safe-buffer: 5.1.2
+      sha.js: 2.4.11
+    dev: false
+    resolution:
+      integrity: sha512-MJG9liiZ+ogc4TzUwuvbER1JRdgvUFSB5+VR/g5h82fGaIRWMWddtKBHi7/sVhfjQZ6SehlyhvQYrcYkaUIpLg==
+  /crypto-js/3.1.8:
+    dev: false
+    resolution:
+      integrity: sha1-cV8HC/YBTyrpkqmLOSkli3E/CNU=
+  /crypto-js/3.1.9-1:
+    dev: false
+    resolution:
+      integrity: sha1-/aGedh/Ad+Af+/3G6f38WeiAbNg=
+  /debug/3.2.6:
+    dependencies:
+      ms: 2.1.1
+    dev: false
+    resolution:
+      integrity: sha512-mel+jf7nrtEl5Pn1Qx46zARXKDpBbvzezse7p7LqINmdoIk8PYP5SySaxEmYv6TZ0JyEKA1hsCId6DIhgITtWQ==
+  /drbg.js/1.0.1:
+    dependencies:
+      browserify-aes: 1.2.0
+      create-hash: 1.2.0
+      create-hmac: 1.1.7
+    dev: false
+    engines:
+      node: '>=0.10'
+    resolution:
+      integrity: sha1-Pja2xCs3BDgjzbwzLVjzHiRFSAs=
+  /elliptic/6.4.1:
+    dependencies:
+      bn.js: 4.11.8
+      brorand: 1.1.0
+      hash.js: 1.1.7
+      hmac-drbg: 1.0.1
+      inherits: 2.0.3
+      minimalistic-assert: 1.0.1
+      minimalistic-crypto-utils: 1.0.1
+    dev: false
+    resolution:
+      integrity: sha512-BsXLz5sqX8OHcsh7CqBMztyXARmGQ3LWPtGjJi6DiJHq5C/qvi9P3OqgswKSDftbu8+IoI/QDTAm2fFnQ9SZSQ==
+  /ethereumjs-abi/0.6.6:
+    dependencies:
+      bn.js: 4.11.8
+      ethereumjs-util: 5.2.0
+    dev: false
+    resolution:
+      integrity: sha512-w8KubDsA/+OAuqtIR9RGsMcoZ5nhM8vxwjJAJvEIY+clhxA3BHoLG3+ClYQaQhD0n3mlDt3U5rBrmSVJvI3c8A==
+  /ethereumjs-util/5.2.0:
+    dependencies:
+      bn.js: 4.11.8
+      create-hash: 1.2.0
+      ethjs-util: 0.1.6
+      keccak: 1.4.0
+      rlp: 2.2.2
+      safe-buffer: 5.1.2
+      secp256k1: 3.6.2
+    dev: false
+    resolution:
+      integrity: sha512-CJAKdI0wgMbQFLlLRtZKGcy/L6pzVRgelIZqRqNbuVFM3K9VEnyfbcvz0ncWMRNCe4kaHWjwRYQcYMucmwsnWA==
+  /ethjs-abi/0.1.8:
+    dependencies:
+      bn.js: 4.11.6
+      js-sha3: 0.5.5
+      number-to-bn: 1.7.0
+    dev: false
+    engines:
+      node: '>=6.5.0'
+      npm: '>=3'
+    resolution:
+      integrity: sha1-zSiFg+1ijN+tr4re+juh28vKbBg=
+  /ethjs-util/0.1.6:
+    dependencies:
+      is-hex-prefixed: 1.0.0
+      strip-hex-prefix: 1.0.0
+    dev: false
+    engines:
+      node: '>=6.5.0'
+      npm: '>=3'
+    resolution:
+      integrity: sha512-CUnVOQq7gSpDHZVVrQW8ExxUETWrnrvXYvYz55wOU8Uj4VCgw56XC2B/fVqQN+f7gmrnRHSLVnFAwsCuNwji8w==
+  /evp_bytestokey/1.0.3:
+    dependencies:
+      md5.js: 1.3.5
+      safe-buffer: 5.1.2
+    dev: false
+    resolution:
+      integrity: sha512-/f2Go4TognH/KvCISP7OUsHn85hT9nUkxxA9BEWxFn+Oj9o8ZNLm/40hdlgSLyuOimsrTKLUMEorQexp/aPQeA==
+  /fast-deep-equal/1.1.0:
+    dev: false
+    resolution:
+      integrity: sha1-wFNHeBfIa1HaqFPIHgWbcz0CNhQ=
+  /fast-json-stable-stringify/2.0.0:
+    dev: false
+    resolution:
+      integrity: sha1-1RQsDK7msRifh9OnYREGT4bIu/I=
+  /file-uri-to-path/1.0.0:
+    dev: false
+    resolution:
+      integrity: sha512-0Zt+s3L7Vf1biwWZ29aARiVYLx7iMGnEUl9x33fbB/j3jR81u/O2LbqK+Bm1CDSNDKVtJ/YjwY7TUd5SkeLQLw==
+  /hash-base/3.0.4:
+    dependencies:
+      inherits: 2.0.3
+      safe-buffer: 5.1.2
+    dev: false
+    engines:
+      node: '>=4'
+    resolution:
+      integrity: sha1-X8hoaEfs1zSZQDMZprCj8/auSRg=
+  /hash.js/1.1.7:
+    dependencies:
+      inherits: 2.0.3
+      minimalistic-assert: 1.0.1
+    dev: false
+    resolution:
+      integrity: sha512-taOaskGt4z4SOANNseOviYDvjEJinIkRgmp7LbKP2YTTmVxWBl87s/uzK9r+44BclBSp2X7K1hqeNfz9JbBeXA==
+  /hmac-drbg/1.0.1:
+    dependencies:
+      hash.js: 1.1.7
+      minimalistic-assert: 1.0.1
+      minimalistic-crypto-utils: 1.0.1
+    dev: false
+    resolution:
+      integrity: sha1-0nRXAQJabHdabFRXk+1QL8DGSaE=
+  /inherits/2.0.3:
+    dev: false
+    resolution:
+      integrity: sha1-Yzwsg+PaQqUC9SRmAiSA9CCCYd4=
+  /is-hex-prefixed/1.0.0:
+    dev: false
+    engines:
+      node: '>=6.5.0'
+      npm: '>=3'
+    resolution:
+      integrity: sha1-fY035q135dEnFIkTxXPggtd39VQ=
+  /js-sha3/0.5.5:
+    dev: false
+    resolution:
+      integrity: sha1-uvDA6MVK1ZA0R9+Wreekobynmko=
+  /json-schema-traverse/0.3.1:
+    dev: false
+    resolution:
+      integrity: sha1-NJptRMU6Ud6JtAgFxdXlm0F9M0A=
+  /keccak/1.4.0:
+    dependencies:
+      bindings: 1.4.0
+      inherits: 2.0.3
+      nan: 2.12.1
+      safe-buffer: 5.1.2
+    dev: false
+    engines:
+      node: '>=4.0.0'
+    requiresBuild: true
+    resolution:
+      integrity: sha512-eZVaCpblK5formjPjeTBik7TAg+pqnDrMHIffSvi9Lh7PQgM1+hSzakUeZFCk9DVVG0dacZJuaz2ntwlzZUIBw==
+  /md5.js/1.3.5:
+    dependencies:
+      hash-base: 3.0.4
+      inherits: 2.0.3
+      safe-buffer: 5.1.2
+    dev: false
+    resolution:
+      integrity: sha512-xitP+WxNPcTTOgnTJcrhM0xvdPepipPSf3I8EIpGKeFLjt3PlJLIDG3u8EX53ZIubkb+5U2+3rELYpEhHhzdkg==
+  /minimalistic-assert/1.0.1:
+    dev: false
+    resolution:
+      integrity: sha512-UtJcAD4yEaGtjPezWuO9wC4nwUnVH/8/Im3yEHQP4b67cXlD/Qr9hdITCU1xDbSEXg2XKNaP8jsReV7vQd00/A==
+  /minimalistic-crypto-utils/1.0.1:
+    dev: false
+    resolution:
+      integrity: sha1-9sAMHAsIIkblxNmd+4x8CDsrWCo=
+  /ms/2.1.1:
+    dev: false
+    resolution:
+      integrity: sha512-tgp+dl5cGk28utYktBsrFqA7HKgrhgPsg6Z/EfhWI4gl1Hwq8B/GmY/0oXZ6nF8hDVesS/FpnYaD/kOWhYQvyg==
+  /nan/2.12.1:
+    dev: false
+    resolution:
+      integrity: sha512-JY7V6lRkStKcKTvHO5NVSQRv+RV+FIL5pvDoLiAtSL9pKlC5x9PKQcZDsq7m4FO4d57mkhC6Z+QhAh3Jdk5JFw==
+  /number-to-bn/1.7.0:
+    dependencies:
+      bn.js: 4.11.6
+      strip-hex-prefix: 1.0.0
+    dev: false
+    engines:
+      node: '>=6.5.0'
+      npm: '>=3'
+    resolution:
+      integrity: sha1-uzYjWS9+X54AMLGXe9QaDFP+HqA=
+  /ripemd160/2.0.2:
+    dependencies:
+      hash-base: 3.0.4
+      inherits: 2.0.3
+    dev: false
+    resolution:
+      integrity: sha512-ii4iagi25WusVoiC4B4lq7pbXfAp3D9v5CwfkY33vffw2+pkDjY1D8GaN7spsxvCSx8dkPqOZCEZyfxcmJG2IA==
+  /rlp/2.2.2:
+    dependencies:
+      bn.js: 4.11.8
+      safe-buffer: 5.1.2
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-Ng2kJEN731Sfv4ZAY2i0ytPMc0BbJKBsVNl0QZY8LxOWSwd+1xpg+fpSRfaMn0heHU447s6Kgy8qfHZR0XTyVw==
+  /safe-buffer/5.1.2:
+    dev: false
+    resolution:
+      integrity: sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==
+  /secp256k1/3.6.2:
+    dependencies:
+      bindings: 1.4.0
+      bip66: 1.1.5
+      bn.js: 4.11.8
+      create-hash: 1.2.0
+      drbg.js: 1.0.1
+      elliptic: 6.4.1
+      nan: 2.12.1
+      safe-buffer: 5.1.2
+    dev: false
+    engines:
+      node: '>=4.0.0'
+    requiresBuild: true
+    resolution:
+      integrity: sha512-90nYt7yb0LmI4A2jJs1grglkTAXrBwxYAjP9bpeKjvJKOjG2fOeH/YI/lchDMIvjrOasd5QXwvV2jwN168xNng==
+  /sha.js/2.4.11:
+    dependencies:
+      inherits: 2.0.3
+      safe-buffer: 5.1.2
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-QMEp5B7cftE7APOjk5Y6xgrbWu+WkLVQwk8JNjZ8nKRciZaByEW6MubieAiToS7+dwvrjGhH8jRXz3MVd0AYqQ==
+  /strip-hex-prefix/1.0.0:
+    dependencies:
+      is-hex-prefixed: 1.0.0
+    dev: false
+    engines:
+      node: '>=6.5.0'
+      npm: '>=3'
+    resolution:
+      integrity: sha1-DF8VX+8RUTczd96du1iNoFUA428=
+  /truffle-blockchain-utils/0.0.5:
+    dev: false
+    resolution:
+      integrity: sha1-pOXAZNrdafeCoTfz0nbSEJXaekc=
+  /truffle-contract-schema/2.0.2:
+    dependencies:
+      ajv: 5.5.2
+      crypto-js: 3.1.9-1
+      debug: 3.2.6
+    dev: false
+    resolution:
+      integrity: sha512-8mYAu0Y7wgMqcIa612dxiN9pzr6rq2YxZCzPizvqyDq+/rGWy8s0irl/T7i92a/4ME1V5ddNFf3+86uIlYbPUg==
+  /truffle-contract/3.0.7:
+    dependencies:
+      ethjs-abi: 0.1.8
+      truffle-blockchain-utils: 0.0.5
+      truffle-contract-schema: 2.0.2
+      truffle-error: 0.0.3
+      web3: 0.20.6
+    dev: false
+    resolution:
+      integrity: sha512-av4MTJDP29PI3oVh8TrvRzRHt+nZJH8ODSiil/TfcXrKMSes52DTA5LHj00siLvcadkxUgoEZfEZ04qqhNGoiA==
+  /truffle-error/0.0.3:
+    dev: false
+    resolution:
+      integrity: sha1-S/VSQuFN7uHHGUkycJGC3v8sl8o=
+  /tslib/1.9.3:
+    dev: false
+    resolution:
+      integrity: sha512-4krF8scpejhaOgqzBEcGM7yDIEfi0/8+8zDRZhNZZ2kjmHJ4hv3zCbQWxoJGz1iw5U0Jl0nma13xzHXcncMavQ==
+  /typescript/3.3.1:
+    dev: true
+    engines:
+      node: '>=4.2.0'
+    hasBin: true
+    resolution:
+      integrity: sha512-cTmIDFW7O0IHbn1DPYjkiebHxwtCMU+eTy30ZtJNBPF9j2O1ITu5XH2YnBeVRKWHqF+3JQwWJv0Q0aUgX8W7IA==
+  /utf8/2.1.2:
+    dev: false
+    resolution:
+      integrity: sha1-H6DZJw6b6FDZsFAn9jUZv0ZFfZY=
+  /web3/0.20.6:
+    dependencies:
+      bignumber.js: github.com/frozeman/bignumber.js-nolookahead/57692b3ecfc98bbdd6b3a516cb2353652ea49934
+      crypto-js: 3.1.8
+      utf8: 2.1.2
+      xhr2: 0.1.4
+      xmlhttprequest: 1.8.0
+    dev: false
+    resolution:
+      integrity: sha1-PpcwauAk+yThCj11yIQwJWIhUSA=
+  /xhr2/0.1.4:
+    dev: false
+    engines:
+      node: '>= 0.6'
+    resolution:
+      integrity: sha1-f4dliEdxbbUCYyOBL4GMras4el8=
+  /xmlhttprequest/1.8.0:
+    dev: false
+    engines:
+      node: '>=0.4.0'
+    resolution:
+      integrity: sha1-Z/4HXFwk/vOfnWX197f+dRcZaPw=
+  github.com/frozeman/bignumber.js-nolookahead/57692b3ecfc98bbdd6b3a516cb2353652ea49934:
+    dev: false
+    name: bignumber.js
+    resolution:
+      tarball: 'https://codeload.github.com/frozeman/bignumber.js-nolookahead/tar.gz/57692b3ecfc98bbdd6b3a516cb2353652ea49934'
+    version: 2.0.7
+registry: 'https://registry.npmjs.org/'
+shrinkwrapMinorVersion: 9
+shrinkwrapVersion: 3
+specifiers:
+  '@dirt/contracts': ^0.1.0
+  '@types/bignumber.js': ^5.0.0
+  '@types/web3': 1.0.14
+  bignumber.js: 'git+https://github.com/frozeman/bignumber.js-nolookahead.git#57692b3ecfc98bbdd6b3a516cb2353652ea49934'
+  ethereumjs-abi: ^0.6.5
+  truffle-contract: ^3.0.5
+  tslib: ^1.9.1
+  typescript: ^3.3.1

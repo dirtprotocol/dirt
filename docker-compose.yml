@@ -1,0 +1,12 @@
+# docker-compose.yml
+version: "3"
+services:
+  contracts:
+    build: .
+    depends_on:
+      - ganache
+    tty: true
+    command: npm run migrate
+  ganache:
+    image: trufflesuite/ganache-cli
+    command: -m 'ivory napkin pact valley valid mix spell unaware problem situate define engine' -d -p 7545

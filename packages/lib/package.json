@@ -1,0 +1,28 @@
+{
+  "name": "@dirt/lib",
+  "version": "0.2.0",
+  "description": "dirt lib",
+  "main": "./dist/index.js",
+  "scripts": {
+    "prepublish": "",
+    "build": "./node_modules/.bin/tsc -p .",
+    "watch": "./node_modules/.bin/tsc -w -p .",
+    "watch:migrate": "npm run watch",
+    "clean": "rm -rf dist"
+  },
+  "author": "",
+  "types": "./dist/index.d.ts",
+  "license": "ISC",
+  "dependencies": {
+    "@dirt/contracts": "^0.1.0",
+    "@types/web3": "1.0.14",
+    "bignumber.js": "git+https://github.com/frozeman/bignumber.js-nolookahead.git",
+    "ethereumjs-abi": "^0.6.5",
+    "truffle-contract": "^3.0.5",
+    "tslib": "^1.9.1"
+  },
+  "devDependencies": {
+    "@types/bignumber.js": "^5.0.0",
+    "typescript": "^3.3.1"
+  }
+}

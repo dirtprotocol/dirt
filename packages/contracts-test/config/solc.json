@@ -1,0 +1,12 @@
+{
+  "optimize": false,
+  "optimize_runs": 200,
+  "allow_paths": [
+    "node_modules",
+    "contracts",
+    "../contracts/contracts"
+  ],
+  "remappings": [
+    ["openzeppelin-solidity", "node_modules/openzeppelin-solidity"]
+  ]
+}
