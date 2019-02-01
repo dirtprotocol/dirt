@@ -15,10 +15,10 @@ COPY ./packages/contracts-test/package.json ./packages/contracts-test/package.js
 COPY ./packages/contracts-test/shrinkwrap.yaml ./packages/contracts-test/shrinkwrap.yaml
 COPY ./packages/lib/package.json ./packages/lib/package.json
 COPY ./packages/lib/shrinkwrap.yaml ./packages/lib/shrinkwrap.yaml
-RUN pnpm recursive install
+RUN pnpm recursive install -s
 
 COPY ./packages/contracts ./packages/contracts
 COPY ./packages/contracts-test ./packages/contracts-test
 COPY ./packages/lib ./packages/lib
 
-WORKDIR ../contracts-test
+WORKDIR packages/contracts-test
