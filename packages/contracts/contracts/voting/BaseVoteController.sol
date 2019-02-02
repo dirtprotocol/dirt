@@ -82,9 +82,9 @@ contract BaseVoteController is Ownable, IVoteController, DebugEvents {
     }
 
     /**
-     * @title Resolve the poll. Once voting period is over, someone needs to
+     * Resolve the poll. Once voting period is over, someone needs to
      * call resolve, to start the claims process.
-     * @params _pollId id of poll
+     * @param _pollId id of poll
      * @dev VoteControllers should have voting methods
      * that fill out the Polling.Data structure.
      * @dev Override this if the concrete vote controller needs to add more guards

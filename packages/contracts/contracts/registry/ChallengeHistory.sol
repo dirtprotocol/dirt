@@ -36,8 +36,8 @@ library ChallengeHistory {
      * @notice Adds Vote Controller to user's history of participation. This can
      * only be called by the vote contract while a vote is active, before it
      * is resolved.
-     * @param _key string the key of the registry entry
-     * @params _stakeholder the address of the voter
+     *@param string the key of the registry entry
+     * @param _stakeholder the address of the voter
      */
     function addVoteHistory(Data storage self, string memory _key, address _stakeholder) public returns (bool) {
         /* Checks */
@@ -59,7 +59,7 @@ library ChallengeHistory {
      * @notice A registry item's active vote. If the registry item is not being
      * challenged, it will return a zero for the address.
      * @dev TODO Need to handle the case where the registry item isn't being challenged.
-     * @params _key the key of the registry item
+     *@param the key of the registry item
      * @return address: address of the VoteController for this registry item's challenge poll
      * @return uint: the voteID of the registry item's challenge poll
      */
@@ -73,8 +73,8 @@ library ChallengeHistory {
 
     /**
      * @notice gets a specific vote for a user.
-     * @params _stakeholder the address of a vote participant
-     * @params _index the index of the history to access. The zeroth index for
+     * @param _stakeholder the address of a vote participant
+     * @param _index the index of the history to access. The zeroth index for
      * the history is the most recent vote for a user.
      * @return address the vote contract's address
      * @return uint the vote id
@@ -107,7 +107,7 @@ library ChallengeHistory {
 
     /**
      * @notice gets the number of vote histories for an address
-     * @params _stakeholder the address of a vote participant
+     * @param _stakeholder the address of a vote participant
      * @return the number of votes a user participated in.
      */
     function getVoteHistoryCount(Data storage self, address _stakeholder) public view returns (uint) {

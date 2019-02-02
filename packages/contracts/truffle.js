@@ -1,8 +1,8 @@
 module.exports = {
   networks: {
     local_ganache: {
-      host: "localhost",
-      port: 7545,
+      host: "ganache",
+      port: 8545,
       gas: 6721975,
       network_id: "*", // Match any network id,
       is_local: true,

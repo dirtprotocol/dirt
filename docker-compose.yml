@@ -10,5 +10,5 @@ services:
   ganache:
     image: trufflesuite/ganache-cli
     ports:
-      - "7545:7545"
-    command: -m 'ivory napkin pact valley valid mix spell unaware problem situate define engine' -d -p 7545
+      - "8545:8545"
+    command: -m 'ivory napkin pact valley valid mix spell unaware problem situate define engine' -d -p 8545

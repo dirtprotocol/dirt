@@ -1,9 +1,6 @@
-FROM node:10.14.2-alpine
-
+FROM node:10.14.2-alpine as builder
 RUN apk add --no-cache git python build-base bash
-
 WORKDIR /usr/src
-
 RUN npm install -g pnpm
 
 COPY ./package.json ./package.json
@@ -17,6 +14,9 @@ COPY ./packages/lib/package.json ./packages/lib/package.json
 COPY ./packages/lib/shrinkwrap.yaml ./packages/lib/shrinkwrap.yaml
 RUN pnpm recursive install -s
 
+FROM node:10.14.2-alpine
+COPY --from=builder /usr/src /usr/src
+WORKDIR /usr/src
 COPY ./packages/contracts ./packages/contracts
 COPY ./packages/contracts-test ./packages/contracts-test
 COPY ./packages/lib ./packages/lib

@@ -119,7 +119,7 @@ contract StakableRegistry is IKeyStore {
      *Will fail if an item of the same key "`_key`" already exists in the registry.
      *Will fail if stake value `_stake` is less than the minimum staking value.
      *Will fail if `message.caller.address()` has not deposited stake value `_stake` in this contract.
-     * @param _key Item key.
+     *@param Item key.
      * @param _value Item value.
      * @param _stake Token stake amount.
      * @return _success True if successful, otherwise false.
@@ -147,7 +147,7 @@ contract StakableRegistry is IKeyStore {
     * @notice Deletes an item to the registry, and withdraws stake amount to owner.
     *Will fail if an item of the  key "`_key`" does not exist.
     *Will fail if `message.caller.address()` is not the marked as the owner of the item.
-    * @param _key Item key to delete.
+    *@param Item key to delete.
     * @return _success True if successful, otherwise false.
     *
     * @dev we use a mutex here, because we want to be explicit about who we withdraw

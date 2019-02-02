@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "rebuild": "docker-compose down && docker-compose up --build contracts",
     "deploy": "docker-compose run contracts npm run migrate",
     "unpause": "docker-compose unpause ganache",
     "pause": "docker-compose pause ganache",

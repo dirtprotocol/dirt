@@ -59,7 +59,7 @@ library Registrar {
 
     /**
      * @param _self RegistryCrud
-     * @param _key key of registry item
+     *@param key of registry item
      */
     function hasItem(Data storage _self, string memory _key) public view returns (bool) {
         return _self.items[_key].owner != address(0);
@@ -68,7 +68,7 @@ library Registrar {
     /**
      * @notice Web3 does not support struct returns, which is why we return multiple items
      * @param _self RegistryCrud
-     * @param _key the key of registry item
+     *@param the key of registry item
      * @return owner Owning address of the item.
      * @return value Content of the item.
      * @return timestamp Timestamp of the item.
@@ -167,7 +167,7 @@ library Registrar {
      * @dev This is designed to be overriden in derived contracts.
 
      * @param _self RegistryCrud
-     * @param _key Item key.
+     *@param Item key.
      * @param _value Item value.
      * @return success True if successful, otherwise false.
      */
@@ -202,7 +202,7 @@ library Registrar {
      * as the owner of the item.
      *
      * @param _self RegistryCrud
-     * @param _key Key of item to edit.
+     *@param Key of item to edit.
      * @param _value New content for the item.
      * @return _success True if successful, otherwise false.
      */
@@ -230,7 +230,7 @@ library Registrar {
      * of the item.
      *
      * @param _self RegistryCrud
-     * @param _key Key of item to edit.
+     *@param Key of item to edit.
      * @return _success True if successful, otherwise false.
      */
     function deleteItem(Data storage _self, string memory _key)
@@ -269,7 +269,7 @@ library Registrar {
 
     /**
      * @param _self RegistryCrud
-     * @param _key Key of registry item
+     *@param Key of registry item
      * @param _owner The owner address to transfer registry item to
      * @param _newValue The new value of the registry
      * @return success True if succeeded
