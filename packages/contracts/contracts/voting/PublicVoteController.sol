@@ -5,9 +5,9 @@ import "../interfaces/IVoteOrigin.sol";
 import "./BaseVoteController.sol";
 
 /**
- *@title PublicVoteController
- *@author DIRT protocol
- *@notice A Vote that's public. Everyone can see who voted for which side and for how much.
+ * @title PublicVoteController
+ * @author DIRT protocol
+ * @notice A Vote that's public. Everyone can see who voted for which side and for how much.
  */
 contract PublicVoteController is BaseVoteController {
 
@@ -43,7 +43,7 @@ contract PublicVoteController is BaseVoteController {
         bytes4 fourth = bytes4(_data[3]) >> 24;
         bytes4 firstFourBytes = first | second | third | fourth;
         require(firstFourBytes == 0x7c30dca5);
-        // TODO: Replace executeCall?
+        // TODO: Replace executeCall
         require(executeCall(address(this), 0, _data));
     }
 

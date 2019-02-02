@@ -6,9 +6,9 @@ import "./interfaces/IKeyStore.sol";
 import "./interfaces/IParameterSource.sol";
 
 /**
- *@title RootRegistry
- *@author DIRT protocol
- *@notice The root registry holds a list of all existing registries. It's also
+ * @title RootRegistry
+ * @author DIRT protocol
+ * @notice The root registry holds a list of all existing registries. It's also
  * where you ask for new registries to be created.
  */
 contract RootRegistry is IKeyStore {

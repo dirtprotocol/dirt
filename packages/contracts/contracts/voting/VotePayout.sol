@@ -6,9 +6,9 @@ import "openzeppelin-solidity/contracts/math/SafeMath.sol";
 import "./Polling.sol";
 
 /**
- *@title VotePayout
- *@author DIRT protocol
- *@notice calculates the amount that each stake holder should get.
+ * @title VotePayout
+ * @author DIRT protocol
+ * @notice calculates the amount that each stake holder should get.
  * The four different stakeholders are the Winner, Loser, Majority Voter, and
  * Minority Voter. The winner can be either the incumbent or challenger candidate.
  * The majority voter voted the winning side. The minority voter voted with
@@ -22,7 +22,7 @@ import "./Polling.sol";
  *
  * See definitions in IVoteController
  *
- * TODO some calculations like loserPot and resolving winners dan probably
+ * TODO some calculations like loserPot and resolving winners can probably
  * be passed in to save on computation and gas?
  */
 library VotePayout {
@@ -46,7 +46,7 @@ library VotePayout {
     // Internal view functions
 
     /**
-     *@notice helper function. calculates the entire loser pot to distribute
+     * @notice helper function. calculates the entire loser pot to distribute
      * among the winners
      */
     function _loserPot(Polling.Data storage pollData, uint _pollId)
@@ -80,7 +80,7 @@ library VotePayout {
     }
 
     /**
-     *@notice helper function. Calculate the amount all the winners staked.
+     * @notice helper function. Calculate the amount all the winners staked.
      */
     function _totalWinningAmt(Polling.Data storage pollData, uint _pollId)
         public
@@ -113,9 +113,9 @@ library VotePayout {
         uint winnerStake = winner.ownerStakeValue;
 
         /**
-         *@dev while we have more accuracy with one division at the end, we
-         *have a greater chance of overflowing with a couple multiplications
-         *and additions in a row
+         * @dev while we have more accuracy with one division at the end, we
+         * have a greater chance of overflowing with a couple multiplications
+         * and additions in a row
          */
         uint winnerStakeGain = totalWinningAmt
             .mul(loserPot)
@@ -126,7 +126,7 @@ library VotePayout {
             .mul(SafeMath.sub(100, poll.configuration.challengeDistribution));
 
         /**
-         *@dev Note that the original winner stake isn't paid out. It's
+         * @dev Note that the original winner stake isn't paid out. It's
          * transferred to the registry. Hence, it's not added to the payout,
          * unlike the payout for majority voters
          */
@@ -172,16 +172,16 @@ library VotePayout {
 
         assert(poll.configuration.challengePenalty <= 100);
 
-        /*@dev we make sure to divide at the very end, because fracMul
+        /* @dev we make sure to divide at the very end, because fracMul
          *rounds down. Originally, we did:
          *
          *   LoserPayout = LoserStake - LoserStake * (ChallengePenalty / 100)
          *
-         *This is a bug since fracMult rounds down, and subtracting a
-         *rounded down number rounds up. Given there can be lots of losers,
-         *this can result in insufficient funds.
+         * This is a bug since fracMult rounds down, and subtracting a
+         * rounded down number rounds up. Given there can be lots of losers,
+         * this can result in insufficient funds.
          *
-         *The fix is that we leave division until the very end. We now do:
+         * The fix is that we leave division until the very end. We now do:
          *
          *   LoserPayout = LoserStake * (100 - ChallengePenalty) / 100
          *
@@ -205,7 +205,7 @@ library VotePayout {
 
         assert(poll.configuration.votePenalty <= 100);
 
-        /*@dev Careful when editing this. See the explanation in _loserPayout */
+        /* @dev Careful when editing this. See the explanation in _loserPayout */
         return fracMul(
             loser.voteValues[msg.sender],
             SafeMath.sub(100, poll.configuration.votePenalty),

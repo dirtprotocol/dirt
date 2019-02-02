@@ -4,9 +4,9 @@ import "openzeppelin-solidity/contracts/token/ERC20/ERC20Mintable.sol";
 import "./interfaces/IApproveAndCallFallBack.sol";
 
 /**
- *@title Protocol Token.
- *@author Entity Protocol
- *@notice ERC20 contrct that keeps track of all DIRT tokens
+ * @title Protocol Token.
+ * @author Entity Protocol
+ * @notice ERC20 contrct that keeps track of all DIRT tokens
  */
 contract ProtocolToken is ERC20Mintable {
     string public name = "Dirt Protocol";
@@ -20,8 +20,6 @@ contract ProtocolToken is ERC20Mintable {
      */
     constructor() public {
         mint(msg.sender, INITIAL_SUPPLY);
-        //totalSupply = INITIAL_SUPPLY;
-        //_balances[msg.sender] = INITIAL_SUPPLY;
     }
 
     /// @notice `msg.sender` approves `_spender` to send `_amount` tokens on

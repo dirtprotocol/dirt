@@ -7,10 +7,10 @@ import "../interfaces/IVoteOrigin.sol";
 import "../interfaces/IParameterSource.sol";
 
 /**
- *@title ChallengeableRegistry
- *@author DIRT Protocol
- *@notice A registry where you can challenge the items in the registry
- *@dev Depending on the types of registries that we see in the future,
+ * @title ChallengeableRegistry
+ * @author DIRT Protocol
+ * @notice A registry where you can challenge the items in the registry
+ * @dev Depending on the types of registries that we see in the future,
  * We merge this with StakeableRegistry
  */
 contract ChallengeableRegistry is StakableRegistry, IVoteOrigin {
@@ -19,7 +19,7 @@ contract ChallengeableRegistry is StakableRegistry, IVoteOrigin {
     uint256  public constant ABSOLUTE_MAX_STAKE = 500000000e18;
 
     /**
-     *@notice When a registry item is challenged, the registry needs to maintain
+     * @notice When a registry item is challenged, the registry needs to maintain
      * a link to the VoteController
      */
     struct VoteReference {
@@ -29,44 +29,44 @@ contract ChallengeableRegistry is StakableRegistry, IVoteOrigin {
     }
 
     /**
-     *@notice Each registry has settings as to how to hold a vote. This is
+     * @notice Each registry has settings as to how to hold a vote. This is
      * passed to the VoteController every time an item is challenged.
      */
     IVoteController.VoteConfiguration public voteConfiguration;
 
     /**
-     *@notice Each registry has a voting style type. This determines which
+     * @notice Each registry has a voting style type. This determines which
      * voting style is invoked when an item is challenged.
      */
     string public voteStyle;
 
     /**
-     *@notice a reference to the parameters that holds addresses to other
+     * @notice A reference to the parameters that holds addresses to other
      * contracts that this contract needs to interact with.
      */
     IParameterSource internal parameters;
 
     /**
-     *@notice a reference all the challenges across the entire registry.
-     *@notice they key of mapping takes the key of a registry item
+     * @notice A reference of all the challenges across the entire registry.
+     * The key of mapping takes the key of a registry item.
      */
     mapping(string => VoteReference) internal challenges;
 
-    //@dev TODO rename these events from Vote to Poll
+    // @dev TODO rename these events from Vote to Poll
     event VoteStarted(string key, address indexed voteContract, uint indexed voteId);
     event VoteCompleted(string key, address indexed voteContract, uint indexed voteId);
     /**
-     *@notice Creates a new ChallengeableRegistry
-     *@params _parameterAddress the address of the Parameters contract
-     *@params _minStake the minimum stake you can put into a challenge
-     *@params _style the voting style used when an item is challenge
-     *@params _challengePenalty the % tokens lost when challenger loses a poll
-     *@params _votePenalty the % tokens lost when minority voter losers a poll
-     *@params _challengeLength the amount of time a challenge exists
-     *@params _challengeDistribution % of loser pot that is distributed amongst
+     * @notice Creates a new ChallengeableRegistry
+     * @params _parameterAddress the address of the Parameters contract
+     * @params _minStake the minimum stake you can put into a challenge
+     * @params _style the voting style used when an item is challenge
+     * @params _challengePenalty the % tokens lost when challenger loses a poll
+     * @params _votePenalty the % tokens lost when minority voter losers a poll
+     * @params _challengeLength the amount of time a challenge exists
+     * @params _challengeDistribution % of loser pot that is distributed amongst
      * majority voters
-     *@params _minVoteStake minimum amount of stake you need to put in a vote
-     *@params _minVoteStake minimum amount of stake you need to increase a vote
+     * @params _minVoteStake minimum amount of stake you need to put in a vote
+     * @params _minVoteStake minimum amount of stake you need to increase a vote
      */
     constructor(
         IParameterSource _parametersAddress,
@@ -117,10 +117,10 @@ contract ChallengeableRegistry is StakableRegistry, IVoteOrigin {
     // Public functions
 
     /**
-     *@notice Edit the value of a registry item
-     *@params _key key of registry item
-     *@params _value the content of the registry item
-     *@return true when succeeds
+     * @notice Edit the value of a registry item
+     * @params _key key of registry item
+     * @params _value the content of the registry item
+     * @return true when succeeds
      */
     function editItem(string memory _key, string memory _value) public returns (bool) {
         /* Checks */
@@ -135,8 +135,8 @@ contract ChallengeableRegistry is StakableRegistry, IVoteOrigin {
     }
 
     /**
-     *@notice Delete the registry item
-     *@params _key: key of registry item
+     * @notice Delete the registry item
+     * @params _key: key of registry item
      */
     function deleteItem(string memory _key) public returns (bool) {
         // Can't delete an item whilst a vote is active
@@ -145,8 +145,8 @@ contract ChallengeableRegistry is StakableRegistry, IVoteOrigin {
     }
 
     /**
-     *@notice Challenge a registry item. Challenger thinks it's wrong, and is
-     *staking tokens with it.
+     * @notice Challenge a registry item. Challenger thinks it's wrong, and is
+     * staking tokens with it.
      */
     // TODO: Only this contract should be able to call this function.
     function challengeItem(
@@ -207,13 +207,13 @@ contract ChallengeableRegistry is StakableRegistry, IVoteOrigin {
     }
 
     /**
-     *@notice update the registry based on the outcome of a vote
-     *@params _voteId the id of the poll
-     *@params _key the registry item key
-     *@params _winner the winner of the poll
-     *@params _value the updated value of the registry item
-     *@params _stake the updated amount the new owner now stakes in the registry item
-     *@return true if success
+     * @notice update the registry based on the outcome of a vote
+     * @params _voteId the id of the poll
+     * @params _key the registry item key
+     * @params _winner the winner of the poll
+     * @params _value the updated value of the registry item
+     * @params _stake the updated amount the new owner now stakes in the registry item
+     * @return true if success
      */
     function assignVoteOutcome(
         uint _voteId,
@@ -242,15 +242,15 @@ contract ChallengeableRegistry is StakableRegistry, IVoteOrigin {
         return true;
     }
 
-    // Public functions that are view
+    // Public functions that are views
 
     /**
-     *@notice A registry item's active vote. If the registry item is not being
+     * @notice A registry item's active vote. If the registry item is not being
      * challenged, it will return a zero for the address.
-     #@dev TODO Need to handle the case where the registry item isn't being challenged.
-     *@params _key the key of the registry item
-     *@return address: address of the VoteController for this registry item's challenge poll
-     *@return uint: the voteID of the registry item's challenge poll
+     * @dev TODO Need to handle the case where the registry item isn't being challenged.
+     * @params _key the key of the registry item
+     * @return address: address of the VoteController for this registry item's challenge poll
+     * @return uint: the voteID of the registry item's challenge poll
      */
     function getActiveVote(string memory _key) public view returns (address, uint) {
         return (address(challenges[_key].voteContract), challenges[_key].voteId);
@@ -278,9 +278,9 @@ contract ChallengeableRegistry is StakableRegistry, IVoteOrigin {
     }
 
     /**
-     *@notice lets you know if the item currently being challenged
-     *@params _key the registry item key
-     *@return bool true if the item is being challenged.
+     * @notice lets you know if the item currently being challenged
+     * @params _key the registry item key
+     * @return bool true if the item is being challenged.
      */
     function isItemChallenged(string memory _key) internal view returns (bool) {
         return challenges[_key].voteId != 0;
@@ -289,9 +289,9 @@ contract ChallengeableRegistry is StakableRegistry, IVoteOrigin {
     // Private functions
 
     /**
-     *@notice a helper function that moves the candidate stakes to the vote contrat
-     *@params _descriptor the settings that dictate how a VoteController behaves
-     *@params voteAddress the voting contract address to move the funds to.
+     * @notice a helper function that moves the candidate stakes to the vote contract
+     * @params _descriptor the settings that dictate how a VoteController behaves
+     * @params voteAddress the voting contract address to move the funds to.
      */
     function _moveFundsToVoteContract(
         IVoteController.VoteDescriptor memory _descriptor,
@@ -306,12 +306,12 @@ contract ChallengeableRegistry is StakableRegistry, IVoteOrigin {
     }
 
     /**
-     *@notice create the vote description
-     *@params _key the registry item key
-     *@params _challenger the challenger
-     *@params _newValue the new value to insert if the challenger wins
-     *@params _challengeState the amount challenger is staking to challenge item
-     *@return a VoteDescriptor
+     * @notice create the vote description
+     * @params _key the registry item key
+     * @params _challenger the challenger
+     * @params _newValue the new value to insert if the challenger wins
+     * @params _challengeState the amount challenger is staking to challenge item
+     * @return a VoteDescriptor
      */
     function _createDescriptor(
         string memory _key,

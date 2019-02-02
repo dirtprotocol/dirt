@@ -7,8 +7,8 @@ import "./ChallengeableRegistry.sol";
 import "../interfaces/IParameterSource.sol";
 
 /**
- *@title RegistryFactory
- *@notice When someone creates a new registry, we use the registry factory to
+ * @title RegistryFactory
+ * @notice When someone creates a new registry, we use the registry factory to
  * create a new contract to maintain that registry. This also allows us to
  * spawn different kinds of registries as well as upgrading them as we see fit.
  */

@@ -1,10 +1,10 @@
 pragma solidity ^0.5.0;
 
 /**
- *@title Registrar maintains the registry data of items
- *@notice When a registry contract needs to keep track of registry items, they
+ * @title Registrar maintains the registry data of items
+ * @notice When a registry contract needs to keep track of registry items, they
  * include this library to help enable CRUD methods.
- *@author DIRT protocol
+ * @author DIRT protocol
  */
 library Registrar {
 
@@ -13,7 +13,7 @@ library Registrar {
         address owner;
 
         /**
-         *@notice This is the value associated with the key inside of the mapping
+         * @notice This is the value associated with the key inside of the mapping
          * for Data.items.
          */
         string value;
@@ -27,25 +27,25 @@ library Registrar {
     }
 
     /**
-     *@notice Event raised when a new item is added to the registry.
-     *@param key Key of the item.
-     *@param index Absolute index of the newly added item.
-     *@param owner Owning address of the item.
+     * @notice Event raised when a new item is added to the registry.
+     * @param key Key of the item.
+     * @param index Absolute index of the newly added item.
+     * @param owner Owning address of the item.
      */
     event AddItem(string key, uint indexed index, address indexed owner);
 
     /**
-     *@notice Event raised when an item is edited in the registry.
-     *@param key Key of the item.
-     *@param index Absolute index of the edited item.
-     *@param owner Owning address of the item.
+     * @notice Event raised when an item is edited in the registry.
+     * @param key Key of the item.
+     * @param index Absolute index of the edited item.
+     * @param owner Owning address of the item.
      */
     event EditItem(string key, uint indexed index,  address indexed owner);
 
     /**
-     *@notice Event raised when an item is deleted from the registry.
-     *@param key Key of the item.
-     *@param owner Owning address of the item.
+     * @notice Event raised when an item is deleted from the registry.
+     * @param key Key of the item.
+     * @param owner Owning address of the item.
      */
     event DeleteItem(string key, address indexed owner);
 
@@ -58,22 +58,22 @@ library Registrar {
     // Public functions
 
     /**
-     *@param _self RegistryCrud
-     *@param _key key of registry item
+     * @param _self RegistryCrud
+     * @param _key key of registry item
      */
     function hasItem(Data storage _self, string memory _key) public view returns (bool) {
         return _self.items[_key].owner != address(0);
     }
 
     /**
-     *@notice Web3 does not support struct returns, which is why we return multiple items
-     *@param _self RegistryCrud
-     *@param _key the key of registry item
-     *@return owner Owning address of the item.
-     *@return value Content of the item.
-     *@return timestamp Timestamp of the item.
+     * @notice Web3 does not support struct returns, which is why we return multiple items
+     * @param _self RegistryCrud
+     * @param _key the key of registry item
+     * @return owner Owning address of the item.
+     * @return value Content of the item.
+     * @return timestamp Timestamp of the item.
      *
-     *@dev TODO Shouldn't this also return the key so the interface matches getAtIndex()?
+     * @dev TODO Shouldn't this also return the key so the interface matches getAtIndex()?
      */
     function getItem(Data storage _self, string memory _key)
         public
@@ -95,9 +95,9 @@ library Registrar {
     }
 
     /**
-     *@param _self RegistryCrud
-     *@param _index index of key we're looking for
-     *@return key the key of the registry item
+     * @param _self RegistryCrud
+     * @param _index index of key we're looking for
+     * @return key the key of the registry item
      */
     function getKeyOfItem(Data storage _self, uint _index)
         public
@@ -108,15 +108,15 @@ library Registrar {
     }
 
     /**
-     *@notice Get the item content of the specified index `_index`.
-     *@notice Web3 doesn't support struct returns, so we return multiple values
+     * @notice Get the item content of the specified index `_index`.
+     * @notice Web3 doesn't support struct returns, so we return multiple values
      *
-     *@param _self RegistryCrud
-     *@param _index Index of the item to get.
-     *@return key Item key.
-     *@return owner Owning address of the item.
-     *@return value Content of the item.
-     *@return timestamp Timestamp of the item.
+     * @param _self RegistryCrud
+     * @param _index Index of the item to get.
+     * @return key Item key.
+     * @return owner Owning address of the item.
+     * @return value Content of the item.
+     * @return timestamp Timestamp of the item.
      */
     function getAtIndex(Data storage _self, uint _index)
         public
@@ -145,9 +145,9 @@ library Registrar {
     }
 
     /**
-     *@notice Gets the total count of items in the registry.
-     *@param _self RegistryCrud
-     *@return _count Count of items in the registry.
+     * @notice Gets the total count of items in the registry.
+     * @param _self RegistryCrud
+     * @return _count Count of items in the registry.
      */
     function getItemCount(Data storage _self) public view returns (uint) {
         // Checks
@@ -157,19 +157,19 @@ library Registrar {
     }
 
     /**
-     *@notice Adds an item to the registry. Will fail if an item of the same key
+     * @notice Adds an item to the registry. Will fail if an item of the same key
      *    "`_key`" already exists in the registry.
-     *@notice DO NOT do a delegatecall() on addItem. Otherwise, the items will
+     * @notice DO NOT do a delegatecall() on addItem. Otherwise, the items will
      *    belong to the outside contract calling your method that calls addItem()
-     *@notice timestamp in item is from block.timestamp and can be spoofed by miners.
+     * @notice timestamp in item is from block.timestamp and can be spoofed by miners.
      *    Don't rely on it to make algorithmic decisions in code.
      *
-     *@dev This is designed to be overriden in derived contracts.
+     * @dev This is designed to be overriden in derived contracts.
 
-     *@param _self RegistryCrud
-     *@param _key Item key.
-     *@param _value Item value.
-     *@return success True if successful, otherwise false.
+     * @param _self RegistryCrud
+     * @param _key Item key.
+     * @param _value Item value.
+     * @return success True if successful, otherwise false.
      */
     // TODO: Only allow the registry to call this.
     function addItem(Data storage _self, string memory _key, string memory _value, address _from)
@@ -197,14 +197,14 @@ library Registrar {
     }
 
     /**
-     *@notice Edits an existing item within the registry. Will fail if an item
-     *of "`_key`" does not exist, and `message.caller.address()` is not marked
-     *as the owner of the item.
+     * @notice Edits an existing item within the registry. Will fail if an item
+     * of "`_key`" does not exist, and `message.caller.address()` is not marked
+     * as the owner of the item.
      *
-     *@param _self RegistryCrud
-     *@param _key Key of item to edit.
-     *@param _value New content for the item.
-     *@return _success True if successful, otherwise false.
+     * @param _self RegistryCrud
+     * @param _key Key of item to edit.
+     * @param _value New content for the item.
+     * @return _success True if successful, otherwise false.
      */
     function editItem(Data storage _self, string memory _key, string memory _value)
         public
@@ -225,13 +225,13 @@ library Registrar {
     }
 
     /**
-     *@notice Deletes an existing item from the registry. Will fail if an item
-     *of "`_key`" exists, and `message.caller.address()` is not marked as the owner
-     *of the item.
+     * @notice Deletes an existing item from the registry. Will fail if an item
+     * of "`_key`" exists, and `message.caller.address()` is not marked as the owner
+     * of the item.
      *
-     *@param _self RegistryCrud
-     *@param _key Key of item to edit.
-     *@return _success True if successful, otherwise false.
+     * @param _self RegistryCrud
+     * @param _key Key of item to edit.
+     * @return _success True if successful, otherwise false.
      */
     function deleteItem(Data storage _self, string memory _key)
         public
@@ -268,11 +268,11 @@ library Registrar {
     // Internal functions
 
     /**
-     *@param _self RegistryCrud
-     *@param _key Key of registry item
-     *@param _owner The owner address to transfer registry item to
-     *@param _newValue The new value of the registry
-     *@return success True if succeeded
+     * @param _self RegistryCrud
+     * @param _key Key of registry item
+     * @param _owner The owner address to transfer registry item to
+     * @param _newValue The new value of the registry
+     * @return success True if succeeded
      */
     function transferItem(
         Data storage _self,

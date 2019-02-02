@@ -138,7 +138,7 @@ export class Dirt {
         return instance as T;
     }
 
-    /*@dev this may not belong here at the top level. Move somewhere else
+    /* @dev this may not belong here at the top level. Move somewhere else
      * if appropriate
      */
     voteIdHistory(userAddress: string): Promise<number[]> {

@@ -13,9 +13,9 @@ import "./VotePayout.sol";
 import "../util/DebugEvents.sol";
 
 /**
- *@title BaseVoteController
- *@author DIRT Protocol
- *@notice The methods relating to governing overall progression on the
+ * @title BaseVoteController
+ * @author DIRT Protocol
+ * @notice The methods relating to governing overall progression on the
  * state of the vote, as well as the payouts.
  */
 contract BaseVoteController is Ownable, IVoteController, DebugEvents {
@@ -46,9 +46,8 @@ contract BaseVoteController is Ownable, IVoteController, DebugEvents {
     // Public functions
 
     /**
-     *@notice After a registry item is challenged, the vote controller needs to
+     * @notice After a registry item is challenged, the vote controller needs to
      * begin the vote, so people can stake their votes on a candidate.
-     *@dev TODO rename to "activate"?
      */
     function beginVote(IVoteController.VoteDescriptor memory _descriptor)
         public
@@ -83,12 +82,12 @@ contract BaseVoteController is Ownable, IVoteController, DebugEvents {
     }
 
     /**
-     *@title Resolve the poll. Once voting period is over, someone needs to
+     * @title Resolve the poll. Once voting period is over, someone needs to
      * call resolve, to start the claims process.
-     *@params _pollId id of poll
-     *@dev VoteControllers should have voting methods
+     * @params _pollId id of poll
+     * @dev VoteControllers should have voting methods
      * that fill out the Polling.Data structure.
-     *@dev Override this if the concrete vote controller needs to add more guards
+     * @dev Override this if the concrete vote controller needs to add more guards
      *
      * TODO make this an external function
      */
@@ -102,7 +101,7 @@ contract BaseVoteController is Ownable, IVoteController, DebugEvents {
 
         Polling.Poll storage poll = pollData._getPoll(_pollId);
 
-        //@dev Normally, we shouldn't rely on timestamp since miners can fake
+        // @dev Normally, we shouldn't rely on timestamp since miners can fake
         // the timestamp. In our case, it's not a real issue, since miners can
         // only change timestamp by about 30 secs
         //
@@ -131,10 +130,11 @@ contract BaseVoteController is Ownable, IVoteController, DebugEvents {
 
 
     /**
-     *@notice Claim your payout. Once a poll is resolved, every participant of the poll
+     * @notice A user calls this as msg.sender to claim their payout. Once a
+     * poll is resolved, every participant of the poll
      * would need to call this method to claim their payout.
      *
-     *@dev Override this if the concrete vote controller needs to add more guards
+     * @dev Override this if the concrete vote controller needs to add more guards
      *
      * TODO make this an external function
      */
@@ -164,7 +164,7 @@ contract BaseVoteController is Ownable, IVoteController, DebugEvents {
     }
 
     /**
-     *@notice After a certain amount of time, not everybody may have claimed their vote.
+     * @notice After a certain amount of time, not everybody may have claimed their vote.
      * We want to be able to clear out the poll, and move all unclaimed votes
      * into an overflow fund.
      *
@@ -194,14 +194,14 @@ contract BaseVoteController is Ownable, IVoteController, DebugEvents {
     }
 
     /**
-     *@notice Owner only: Force expiration of the vote.
+     * @notice Owner only: Force expiration of the vote.
      */
     function forceExpireActiveState(uint _pollId) onlyOwner external returns (bool) {
         return pollData._forceExpire(_pollId);
     }
 
     /**
-     *@notice Owner only: Force expiration of the payout period.
+     * @notice Owner only: Force expiration of the payout period.
      */
     function forceExpirePayoutState(uint _pollId) onlyOwner external returns (bool) {
         return pollData._forceExpirePayoutState(_pollId);

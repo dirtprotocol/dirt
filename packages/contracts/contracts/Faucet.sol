@@ -4,7 +4,7 @@ import "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
 import "./interfaces/IParameterSource.sol";
 
 /**
- *@dev only deployed on testnets
+ * @dev only deployed on testnets
  */
 contract Faucet {
 

@@ -31,12 +31,12 @@ contract IVoteController {
         string style;
 
         /**
-         *@notice the percentage lost by the challenger if they lose the vote.
+         * @notice the percentage lost by the challenger if they lose the vote.
          */
         uint challengePenalty;
 
         /**
-         *@notice the percentage lost by a minority voter.
+         * @notice the percentage lost by a minority voter.
          */
         uint votePenalty;
 
@@ -44,7 +44,7 @@ contract IVoteController {
         uint challengeLength;
 
         /**
-         *@notice the percentage of the loser pot that gets distributed between
+         * @notice the percentage of the loser pot that gets distributed between
          * the winners and the majority voters.
          */
         uint challengeDistribution;

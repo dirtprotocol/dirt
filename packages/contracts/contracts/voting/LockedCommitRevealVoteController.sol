@@ -8,11 +8,11 @@ import "../interfaces/ICommitRevealVoteController.sol";
 
 
 /**
- *@title LockedCommitRevealVoteController
- *@author DIRT protocol
- *@notice a voting style where the votes are hidden, and a voter needs to lock a
+ * @title LockedCommitRevealVoteController
+ * @author DIRT protocol
+ * @notice a voting style where the votes are hidden, and a voter needs to lock a
  * certain amount during the commit phase, and get it back during the reveal.
- *@notice See CommitRevealVoteController for more details
+ * @notice See CommitRevealVoteController for more details
  */
 contract LockedCommitRevealVoteController is Ownable, BaseVoteController, ICommitRevealVoteController {
 
@@ -137,7 +137,7 @@ contract LockedCommitRevealVoteController is Ownable, BaseVoteController, ICommi
     }
 
     /**
-     *@notice see base class
+     * @notice see base class
      */
     function resolve(uint _pollId) public {
         require(!revealActive(_pollId));
@@ -145,7 +145,7 @@ contract LockedCommitRevealVoteController is Ownable, BaseVoteController, ICommi
     }
 
     /**
-     *@notice see base class
+     * @notice see base class
      */
     function claimPayout(uint _pollId) public returns (uint) {
         require(!revealActive(_pollId));

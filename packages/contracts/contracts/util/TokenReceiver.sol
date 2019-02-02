@@ -4,9 +4,9 @@ import "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
 import "openzeppelin-solidity/contracts/math/SafeMath.sol";
 
 /**
- *@title TokenReceiver interface
- *@author DIRT Protocol
- *@dev Provides methods to transfer ERC20 tokens to this contract if senders
+ * @title TokenReceiver interface
+ * @author DIRT Protocol
+ * @dev Provides methods to transfer ERC20 tokens to this contract if senders
  *     authorize this contract to act on their behalf. Provides book keeping
  *     for the amount of tokens "locked" into the contract for each sender.
  */
@@ -23,7 +23,7 @@ library TokenReceiver {
          //@title Mapping of senders to how much has been transferred on their behalf.
         mapping(address => uint256) deposits;
 
-        //@title prevent reentrancy withdraws
+        //@title prevent reentrancy withdrawals
         bool withdrawMutex;
     }
 
@@ -38,7 +38,7 @@ library TokenReceiver {
     }
 
     /**
-     *@notice Calculates the amount of tokens not attributed to anyone
+     * @notice Calculates the amount of tokens not attributed to anyone
      */
     function unattributedTokenValue(Data storage self) public view returns (uint256 _value) {
         uint256 erc20balance = self.tokenContract.balanceOf(address(this));
@@ -46,14 +46,14 @@ library TokenReceiver {
     }
 
     /**
-     *@notice Returns the amount deposited that's attributed to someone
+     * @notice Returns the amount deposited that's attributed to someone
      */
     function depositBalanceOf(Data storage self, address _address) public view returns (uint256) {
         return self.deposits[_address];
     }
 
     /**
-     *@notice Attribute unowned token amount to someone. A Safe version of attribute that
+     * @notice Attribute unowned token amount to someone. A Safe version of attribute that
      * coordinates with amount in token contract
      */
     function attributeUnowned(Data storage self, address owner, uint256 _value) public returns (bool) {
@@ -85,7 +85,7 @@ library TokenReceiver {
     }
 
     /**
-     *@notice Attribute token amount to someone. Only for internal use
+     * @notice Attribute token amount to someone. Only for internal use
      */
     function _attribute(Data storage self, address _owner, uint256 _value) public {
         self.deposits[_owner] = self.deposits[_owner].add(_value);
@@ -93,7 +93,7 @@ library TokenReceiver {
     }
 
     /**
-     *@notice Withdraws tokens out of token receiver back to attributed owner
+     * @notice Withdraws tokens out of token receiver back to attributed owner
      */
     function withdrawTo(Data storage self, address _address, uint256 _value) public returns (bool) {
 
@@ -122,7 +122,7 @@ library TokenReceiver {
     }
 
     /**
-     *@notice Transfers deposited amount between two addresses, but within the TokenReceiver
+     * @notice Transfers deposited amount between two addresses, but within the TokenReceiver
      */
     function transferDeposit(Data storage self, address _from, address _to, uint256 _value) public returns (bool) {
         require(_from != address(0));

@@ -7,9 +7,9 @@ import "./BaseVoteController.sol";
 import "../interfaces/ICommitRevealVoteController.sol";
 
 /**
- *@title CommitRevealVoteController
- *@author DIRT protocol
- *@notice a voting style where the votes are hidden. There is an extra reveal
+ * @title CommitRevealVoteController
+ * @author DIRT protocol
+ * @notice a voting style where the votes are hidden. There is an extra reveal
  * stage where people reveal their votes, before a vote is resolved. This way,
  * people won't just vote for a candidate once they see that side is winning.
  */
@@ -39,18 +39,19 @@ contract CommitRevealVoteController is Ownable, BaseVoteController, ICommitRevea
     }
 
     /**
-     *@notice Only called during tests.
-     *@notice Can only be called by the registry contract that initiated the vote
+     * @notice Only called during tests.
+     * @notice Can only be called by the registry contract that initiated the vote
      */
     function forceExpireRevealState(uint _pollId) onlyOwner public returns (bool) {
         require(pollExists(_pollId), "Vote must exist");
+        // TODO Can we just delete this comment?
         // require(msg.sender == pollData.polls[_pollId].origin, "Can only be expired from owning contract");
         commits[_pollId].revealExpiration = block.timestamp;
         return true;
     }
 
     /**
-     *@notice checks whether we're able to reveal our votes.
+     * @notice checks whether we're able to reveal our votes.
      */
     function revealActive(uint _pollId) public view returns (bool) {
         return pollExists(_pollId) &&
@@ -60,7 +61,7 @@ contract CommitRevealVoteController is Ownable, BaseVoteController, ICommitRevea
     }
 
     /**
-     *@notice See base class
+     * @notice See base class
      */
     function beginVote(IVoteController.VoteDescriptor memory _descriptor) public returns (bool _success, uint _id) {
         (_success, _id) = super.beginVote(_descriptor);
@@ -76,7 +77,7 @@ contract CommitRevealVoteController is Ownable, BaseVoteController, ICommitRevea
     }
 
     /**
-     *@notice votes commits their vote with a secret hash and a stake. While the stake is visible,
+     * @notice votes commits their vote with a secret hash and a stake. While the stake is visible,
      * it's not visible which candidate they voted for.
      */
     function commit(uint _pollId, bytes32 _secretHash, uint256 _stake) public returns (bool) {
@@ -109,7 +110,7 @@ contract CommitRevealVoteController is Ownable, BaseVoteController, ICommitRevea
     }
 
     /**
-     *@notice increase the commitment to vote by additional amount
+     * @notice increase the commitment to vote by additional amount
      */
     function increaseCommit(uint _pollId, uint256 _additionalStake) public returns (bool) {
         require(pollExists(_pollId), "Vote must exist");
@@ -128,13 +129,14 @@ contract CommitRevealVoteController is Ownable, BaseVoteController, ICommitRevea
     }
 
     /**
-     *@notice After voting period expires, people need to reveal their votes by sending in
+     * @notice After voting period expires, people need to reveal their votes by sending in
      * the actual candidate they voted for, and a salt help match their previous committment.
      */
     function revealVote(uint _pollId, IVoteController.Candidate _candidate, uint salt) public returns (bool) {
         require(revealActive(_pollId), "Reveal phase must be active");
         require(_hasCommited(_pollId, msg.sender), "Sender has previously commited");
 
+        // TODO Can we delete this comment?
         // bytes memory packed = abi.encodePacked(uint(_candidate), salt);
         bytes32 expected = keccak256(abi.encodePacked(uint(_candidate), salt));
 
@@ -152,7 +154,7 @@ contract CommitRevealVoteController is Ownable, BaseVoteController, ICommitRevea
     }
 
     /**
-     *@notice see base class
+     * @notice see base class
      */
     function resolve(uint _pollId) public {
         require(!revealActive(_pollId));
@@ -160,7 +162,7 @@ contract CommitRevealVoteController is Ownable, BaseVoteController, ICommitRevea
     }
 
     /**
-     *@notice see base class
+     * @notice see base class
      */
     function claimPayout(uint _pollId) public returns (uint) {
         require(!revealActive(_pollId));
@@ -168,16 +170,16 @@ contract CommitRevealVoteController is Ownable, BaseVoteController, ICommitRevea
     }
 
     /**
-     *@notice see base class
-     *@dev what do we do with non-revealed votes?
+     * @notice see base class
+     * @dev what do we do with non-revealed votes?
      */
     function close(uint _pollId) public returns (bool) {
 
     }
 
     /**
-     *@notice see if a user has committed
-     *@dev should people be able to query any address, hence make private
+     * @notice see if a user has committed
+     * @dev should people be able to query any address, hence make private
      * function public?
      */
     function hasCommitted(uint _pollId) public view returns (bool) {

@@ -4,49 +4,49 @@ import "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
 import "openzeppelin-solidity/contracts/math/SafeMath.sol";
 
 /**
- *@author DIRT protocol
- *@title Manages a pool of ERC20 tokens to be paid out.
- *@notice Like a TokenReceiver, it keeps track fo how much to payout, and
- *for whom. It just makes sure that once someone claims a payout, they
- *cannot claim it again.
+ * @author DIRT protocol
+ * @title Manages a pool of ERC20 tokens to be paid out.
+ * @notice Like a TokenReceiver, it keeps track of how much to payout, and
+ * for whom. It just makes sure that once someone claims a payout, they
+ * cannot claim it again.
  */
 library TokenPot {
     using SafeMath for uint256;
 
     /**
-     *@title contains information about a specific pot
+     * @title contains information about a specific pot
      */
     struct Pot {
         /**
-         *@title the amount already claimed by each user
+         * @title the amount already claimed by each user
          */
         mapping(address => uint256) amountClaimed;
 
         /**
-         *@title the total pot amount
+         * @title the total pot amount
          */
          uint256 totalAmount;
     }
 
     struct Data {
         /**
-         *@title Address of ERC20 contract
+         * @title Address of ERC20 contract
          */
         ERC20 tokenContract;
 
         /**
-         *@title ERC20 slush account
+         * @title ERC20 slush account
          */
         address slushAddress;
 
         /**
-         *@title records the pot amounts and who claimed in each pot.
-         *@note keys are identifiers for each pot. In our case, it's a pollId.
+         * @title records the pot amounts and who claimed in each pot.
+         * @note keys are identifiers for each pot. In our case, it's a pollId.
          */
         mapping(uint256 => Pot) pots;
 
         /**
-         *@title total amount deposited for all pots
+         * @title total amount deposited for all pots
          */
         uint256 totalDepositedValue;
 
@@ -84,12 +84,12 @@ library TokenPot {
     // Internal functions
 
     /**
-     *@notice attributes unowned tokens to the pot. Call this once after someone transferred
-     *dirt tokens into the contract.
-     *@dev When tokens are initially transfers to the vote controller, it's not recorded
-     *in the total pot until this method is called.
-     *@dev given _unattributedTokenValue returns the diff between totalDeposited and
-     *the amount of token in contract, you should be able to call this multiple times.
+     * @notice attributes unowned tokens to the pot. Call this once after someone transferred
+     * dirt tokens into the contract.
+     * @dev When tokens are initially transfers to the vote controller, it's not recorded
+     * in the total pot until this method is called.
+     * @dev given _unattributedTokenValue returns the diff between totalDeposited and
+     * the amount of token in contract, you should be able to call this multiple times.
      */
     function attributeUnownedToPot(
         Data storage self,
@@ -117,7 +117,7 @@ library TokenPot {
     }
 
     /**
-     *@notice deposits tokens to the poll's pot
+     * @notice deposits tokens to the poll's pot
      */
      // TODO: Only allow trusted contracts to call this.
     function depositHere(
@@ -162,7 +162,7 @@ library TokenPot {
     }
 
     /**
-     *@notice withdraws payout to address
+     * @notice withdraws payout to address
      */
     function withdrawTo(
         Data storage self,
@@ -210,7 +210,7 @@ library TokenPot {
     // Internal functions that are view
 
     /**
-     *@notice Calculates the amount of tokens not attributed to any poll's pot
+     * @notice Calculates the amount of tokens not attributed to any poll's pot
      */
     function _unattributedTokenValue(Data storage self)
         internal

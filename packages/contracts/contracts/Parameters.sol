@@ -4,11 +4,11 @@ import "./interfaces/IParameterSource.sol";
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 
 /**
- *@title Parameters
- *@author DIRT protocol
- *@notice Stores many of the addresses to contracts in the DIRT protocol, and
+ * @title Parameters
+ * @author DIRT protocol
+ * @notice Stores many of the addresses to contracts in the DIRT protocol, and
  * other parameters and settings. In the future, we can store settings in here.
- *@dev TODO: Consider multiple ownership or hertiable
+ * @dev TODO: Consider multiple ownership or inheritable
  */
 contract Parameters is Ownable, IParameterSource {
 

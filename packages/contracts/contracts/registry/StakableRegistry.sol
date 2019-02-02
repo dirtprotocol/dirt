@@ -7,9 +7,9 @@ import "../interfaces/IParameterSource.sol";
 import "../interfaces/IKeyStore.sol";
 
 /**
- *@title StakableRegistry
- *@author DIRT Protocol
- *@notice A type of registry where you can stake claims to the items in the registry.
+ * @title StakableRegistry
+ * @author DIRT Protocol
+ * @notice A type of registry where you can stake claims to the items in the registry.
  */
 contract StakableRegistry is IKeyStore {
 
@@ -55,7 +55,7 @@ contract StakableRegistry is IKeyStore {
         bytes4 fourth = bytes4(_data[3]) >> 24;
         bytes4 firstFourBytes = first | second | third | fourth;
         require(firstFourBytes == 0x6a44bcc8 || firstFourBytes == 0x692fe6ad);
-        // TODO: Replace executeCall?
+        // TODO: Replace executeCall
         require(executeCall(address(this), 0, _data));
     }
 
@@ -115,14 +115,14 @@ contract StakableRegistry is IKeyStore {
     }
 
     /**
-     *@notice Adds an item to the registry, and locks the staking value from withdraw.
+     * @notice Adds an item to the registry, and locks the staking value from withdraw.
      *Will fail if an item of the same key "`_key`" already exists in the registry.
      *Will fail if stake value `_stake` is less than the minimum staking value.
      *Will fail if `message.caller.address()` has not deposited stake value `_stake` in this contract.
-     *@param _key Item key.
-     *@param _value Item value.
-     *@param _stake Token stake amount.
-     *@return _success True if successful, otherwise false.
+     * @param _key Item key.
+     * @param _value Item value.
+     * @param _stake Token stake amount.
+     * @return _success True if successful, otherwise false.
     */
     // TODO: Only this contract should be able to call this function.
     function addItem(string memory _key, string memory _value, uint256 _stake, address _from)
@@ -144,13 +144,13 @@ contract StakableRegistry is IKeyStore {
     }
 
    /**
-    *@notice Deletes an item to the registry, and withdraws stake amount to owner.
+    * @notice Deletes an item to the registry, and withdraws stake amount to owner.
     *Will fail if an item of the  key "`_key`" does not exist.
     *Will fail if `message.caller.address()` is not the marked as the owner of the item.
-    *@param _key Item key to delete.
-    *@return _success True if successful, otherwise false.
+    * @param _key Item key to delete.
+    * @return _success True if successful, otherwise false.
     *
-    *@dev we use a mutex here, because we want to be explicit about who we withdraw
+    * @dev we use a mutex here, because we want to be explicit about who we withdraw
     * to and how much, which means we need to delete it after the transfer.
     */
     function deleteItem(string memory _key) public returns (bool) {
@@ -186,10 +186,10 @@ contract StakableRegistry is IKeyStore {
     // Internal functions
 
     /**
-     *@notice When a vote is resolved, and a winner picked, the item with a
+     * @notice When a vote is resolved, and a winner picked, the item with a
      * new value and staked amount should be transferred to a new owner
      *
-     *@dev we actually just overwrite the values to the new owners. The original
+     * @dev we actually just overwrite the values to the new owners. The original
      * values by the losing candidate is determined in votePayout, and will need
      * to be withdrawn.
      */

@@ -6,9 +6,9 @@ import "../interfaces/IVoteController.sol";
 import "openzeppelin-solidity/contracts/math/SafeMath.sol";
 
 /**
- *@title Polling
- *@author DIRT protocol
- *@notice The mechanism for keeping track of who voted for what and what
+ * @title Polling
+ * @author DIRT protocol
+ * @notice The mechanism for keeping track of who voted for what and what
  * candidates there are are kept here. VoteControllers use this to keep track of Polls
  */
 library Polling {
@@ -182,8 +182,8 @@ library Polling {
     }
 
     /**
-     *@notice only called in testing
-     *@dev this is an internal method that should never be called in any public
+     * @notice only called in testing
+     * @dev this is an internal method that should never be called in any public
      * or external function unless it's part of a test harness
      *TODO rename to forceExpireActiveState
      */
@@ -208,8 +208,8 @@ library Polling {
     }
 
     /**
-     *@notice only called in testing
-     *@dev this is an internal method that should never be called in any public
+     * @notice only called in testing
+     * @dev this is an internal method that should never be called in any public
      * or external function unless it's part of a test harness
      */
     function _forceExpirePayoutState(Data storage self, uint _pollId)
@@ -416,8 +416,8 @@ library Polling {
     // Internal functions that are view
 
     /**
-     *@dev is not public because you can only return structs in internal methods
-     * Since the code is not huge, it won't bloat the client contract.
+     * @dev This is not public because you can only return structs in internal
+     * methods. Since the code is not huge, it won't bloat the client contract.
      * http://solidity.readthedocs.io/en/develop/frequently-asked-questions.html#can-a-contract-function-return-a-struct
      */
     function _getPoll(Data storage self, uint _pollId)
