@@ -1,5 +1,5 @@
 dependencies:
-  '@dirt/contracts': 0.1.1
+  '@dirt/contracts': 'link:../contracts'
   '@types/web3': 1.0.14
   bignumber.js: github.com/frozeman/bignumber.js-nolookahead/57692b3ecfc98bbdd6b3a516cb2353652ea49934
   ethereumjs-abi: 0.6.6
@@ -12,10 +12,6 @@ devDependencies:
   typedoc-plugin-internal-external: 2.0.1
   typescript: 3.3.1
 packages:
-  /@dirt/contracts/0.1.1:
-    dev: false
-    resolution:
-      integrity: sha512-HkbXNjIQn6p8N12btnd/dNtypb0qywmOJiPhO42+dK5ln7E3te6gYxn323N+CgnDri6HWdKtE+2gDpwaq1nUGg==
   /@types/bignumber.js/5.0.0:
     dependencies:
       bignumber.js: 8.0.2
@@ -1890,7 +1886,7 @@ registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
-  '@dirt/contracts': ^0.1.0
+  '@dirt/contracts': 'link:../contracts'
   '@types/bignumber.js': ^5.0.0
   '@types/web3': 1.0.14
   bignumber.js: 'git+https://github.com/frozeman/bignumber.js-nolookahead.git'
