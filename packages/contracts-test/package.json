@@ -18,8 +18,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@dirt/contracts": "^0.1.0",
-    "@dirt/lib": "^0.2.0",
+    "@dirt/contracts": "^0.1.1",
+    "@dirt/lib": "^0.2.0-alpha-1",
     "bignumber.js": "github:frozeman/bignumber.js-nolookahead",
     "onchange": "^4.0.0",
     "openzeppelin-solidity": "EntityProtocol/openzeppelin-solidity",
