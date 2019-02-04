@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 70 70" style="width: 100%; height: 100%;"><desc>Made with illustrio</desc>
+  
+<g class="shadow"><g fill="none" fill-rule="evenodd" stroke="none">
+    
+    <path fill="none" d="M15,17.7 C14.9,17.6 12.7,16.6 10.5,16 L10.5,1.8 C10.5,1.4 10.2,0.9 9.7,0.9 L6.4,0.9 C6,0.9 5.3,1.5 5.3,1.9 L5.3,16.1 C3.8,16.6 1.1,17.4 1,17.5 C0.7,17.6 0.5,18 0.6,18.4 C0.6,18.6 1.7,23.1 2.4,25.6 C3.2,28.1 7,30.6 7.5,30.9 C7.7,31 7.8,31 8,31 C8.1,31 8.3,31 8.4,30.9 C8.9,30.6 13.1,28.3 14.1,25.7 C15.1,22.9 15.5,18.7 15.5,18.5 C15.4,18.2 15.2,17.9 15,17.7 L15,17.7 Z M6.8,2.5 L8.9,2.5 L8.9,11.6 C8.8,11.6 8.7,11.5 8.6,11.5 L6.8,11.5 L6.8,2.5 L6.8,2.5 Z M7.9,20.6 L6.8,19.6 L6.8,13 L8.6,13 C8.7,13 8.8,13.1 8.9,13.1 L8.9,19.8 L7.9,20.6 L7.9,20.6 Z" transform="translate(27 19)" stroke="none"></path>
+  </g></g><g class="clone"><g fill="none" fill-rule="evenodd" stroke="none" style="stroke-width: 2;" class="main-fill main-stroke">
+    
+    <path fill="none" d="M15,17.7 C14.9,17.6 12.7,16.6 10.5,16 L10.5,1.8 C10.5,1.4 10.2,0.9 9.7,0.9 L6.4,0.9 C6,0.9 5.3,1.5 5.3,1.9 L5.3,16.1 C3.8,16.6 1.1,17.4 1,17.5 C0.7,17.6 0.5,18 0.6,18.4 C0.6,18.6 1.7,23.1 2.4,25.6 C3.2,28.1 7,30.6 7.5,30.9 C7.7,31 7.8,31 8,31 C8.1,31 8.3,31 8.4,30.9 C8.9,30.6 13.1,28.3 14.1,25.7 C15.1,22.9 15.5,18.7 15.5,18.5 C15.4,18.2 15.2,17.9 15,17.7 L15,17.7 Z M6.8,2.5 L8.9,2.5 L8.9,11.6 C8.8,11.6 8.7,11.5 8.6,11.5 L6.8,11.5 L6.8,2.5 L6.8,2.5 Z M7.9,20.6 L6.8,19.6 L6.8,13 L8.6,13 C8.7,13 8.8,13.1 8.9,13.1 L8.9,19.8 L7.9,20.6 L7.9,20.6 Z" transform="translate(27 19)" stroke="none" style="stroke-width: 2;" class="main-fill main-stroke"></path>
+  </g></g><g class="base"><g fill="none" fill-rule="evenodd" stroke="none" class="secondary-fill">
+    
+    <path fill="none" d="M15,17.7 C14.9,17.6 12.7,16.6 10.5,16 L10.5,1.8 C10.5,1.4 10.2,0.9 9.7,0.9 L6.4,0.9 C6,0.9 5.3,1.5 5.3,1.9 L5.3,16.1 C3.8,16.6 1.1,17.4 1,17.5 C0.7,17.6 0.5,18 0.6,18.4 C0.6,18.6 1.7,23.1 2.4,25.6 C3.2,28.1 7,30.6 7.5,30.9 C7.7,31 7.8,31 8,31 C8.1,31 8.3,31 8.4,30.9 C8.9,30.6 13.1,28.3 14.1,25.7 C15.1,22.9 15.5,18.7 15.5,18.5 C15.4,18.2 15.2,17.9 15,17.7 L15,17.7 Z M6.8,2.5 L8.9,2.5 L8.9,11.6 C8.8,11.6 8.7,11.5 8.6,11.5 L6.8,11.5 L6.8,2.5 L6.8,2.5 Z M7.9,20.6 L6.8,19.6 L6.8,13 L8.6,13 C8.7,13 8.8,13.1 8.9,13.1 L8.9,19.8 L7.9,20.6 L7.9,20.6 Z" transform="translate(27 19)" stroke="none" class="secondary-fill"></path>
+  </g></g><style>
+          .main-fill {fill: #5ac951;}
+          .main-stroke {stroke: #5ac951;}
+          .secondary-fill {fill: #f6f8ff;}
+          .secondary-stroke {stroke: #f6f8ff;}
+
+          .main-fill--darken {fill: #399d31;}
+          .main-stroke--darken {stroke: #399d31;}
+          .secondary-fill--darken {fill: #a9bcff;}
+          .secondary-stroke--darken {stroke: #a9bcff;}
+
+          .main-fill--darkener {fill: #2b7625;}
+          .main-stroke--darkener {stroke: #2b7625;}
+          .secondary-fill--darkener {fill: #7695ff;}
+          .secondary-stroke--darkener {stroke: #7695ff;}
+        </style></svg>
