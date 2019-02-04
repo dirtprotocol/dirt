@@ -21,7 +21,7 @@
   "types": "./dist/index.d.ts",
   "license": "ISC",
   "dependencies": {
-    "@dirt/contracts": "^0.1.0",
+    "@dirt/contracts": "^0.1.1",
     "@types/web3": "1.0.14",
     "bignumber.js": "git+https://github.com/frozeman/bignumber.js-nolookahead.git",
     "ethereumjs-abi": "^0.6.5",

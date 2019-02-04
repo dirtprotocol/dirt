@@ -1890,7 +1890,7 @@ registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
-  '@dirt/contracts': ^0.1.0
+  '@dirt/contracts': ^0.1.1
   '@types/bignumber.js': ^5.0.0
   '@types/web3': 1.0.14
   bignumber.js: 'git+https://github.com/frozeman/bignumber.js-nolookahead.git'
