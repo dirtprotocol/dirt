@@ -1,57 +1,109 @@
+import * as DirtAbi from '@dirt/contracts';
 import * as Web3 from 'web3';
 
-import { IContractConfiguration } from '../contracts/IContract';
-import { StaticContractProvider } from './StaticContractProvider';
-import { Contract } from '../contracts/Contract';
-import { Dirt } from './Dirt';
+import {Contract} from '../contracts/Contract';
 
-export interface IContractProvider {
-    get(provider: Web3.Provider, name: string, address?: string): Promise<any>;
+import {Dirt} from './Dirt';
+
+import contract = require('truffle-contract');
+import {RootRegistry, Parameters, Token, PublicVoteController, CommitRevealVoteController, LockedCommitRevealVoteController, ChallengeableRegistry, StakableRegistry, Faucet} from '../contracts';
+
+/** @internal */
+export {ContractInstance, ContractReader, IContractConfiguration};
+
+interface ContractInstance {
+  [key: string]: any;
 }
 
-export class ContractReader {
+type ContractClass = new (dirt: Dirt, instance: ContractInstance) => Contract;
 
-    private dirt : Dirt
-    public web3: Web3 = null;
-    private contractCache: Map<string, any> = new Map();
-    private instanceCache: Map<string, any> = new Map();
+interface IContractConfiguration {
+  type: ContractClass;
+  address?: string;
+}
 
-    constructor(dirt: Dirt, private web3Instance: Web3, private contractProvider?: IContractProvider) {
-        this.dirt = dirt
-        this.web3 = web3Instance
-        this.contractProvider = contractProvider || new StaticContractProvider();
+const CONTRACT_CLASS_TO_NAME: Map<ContractClass, string> = (() => {
+  const CONTRACT_CLASSES = [
+    [RootRegistry, 'RootRegistry'],
+    [Parameters, 'Parameters'],
+    [Token, 'ProtocolToken'],
+    [ChallengeableRegistry, 'ChallengeableRegistry'],
+    [StakableRegistry, 'StakableRegistry'],
+    [PublicVoteController, 'PublicVoteController'],
+    [CommitRevealVoteController, 'CommitRevealVoteController'],
+    [LockedCommitRevealVoteController, 'LockedCommitRevealVoteController'],
+    [Faucet, 'Faucet'],
+  ];
+  const map = new Map();
+  for (const cc of CONTRACT_CLASSES) {
+    map.set(cc[0] as ContractClass, cc[1] as string);
+  }
+  return map;
+})();
+
+class ContractReader {
+  dirt: Dirt;
+  web3: Web3 = null;
+  contractCache: Map<string, ContractInstance> = new Map();
+  wrapperCache: Map<string, Contract> = new Map();
+
+  constructor(dirt: Dirt, web3Instance: Web3) {
+    this.dirt = dirt;
+    this.web3 = web3Instance;
+  }
+
+  async getContract<T extends Contract>(config: IContractConfiguration):
+      Promise<T> {
+    const name = CONTRACT_CLASS_TO_NAME.get(config.type);
+    if (!name) {
+      throw new Error('Cannot lookup contract name');
+    }
+    const key = name + (config.address || 'DEFAULT');
+
+    if (this.wrapperCache.has(key)) {
+      return this.wrapperCache.get(key) as T;
     }
 
-    async getContract<T extends Contract>(config: IContractConfiguration): Promise<T> {
-        let key = config.name + (config.address || 'DEFAULT');
+    const contractInstance =
+        await this.getContractInstance(name, config.address);
+    const instance = new config.type(this.dirt, contractInstance) as T;
 
-        if (this.instanceCache.has(key)) {
-            return this.instanceCache.get(key);
-        }
-
-        config.instance = config.instance || await this.getContractInstance(config.name, config.address);
-        let instance = new config.type(this.dirt, config) as T;
-
-        if (instance.init) {
-            await instance.init();
-        }
-
-        this.instanceCache.set(key, instance);
-
-        return instance;
+    if (instance.init) {
+      await instance.init();
     }
 
-    async getContractInstance<T>(name: string, address?: string): Promise<T> {
-        let key = name + (address || 'DEFAULT');
+    this.wrapperCache.set(key, instance);
 
-        if (this.contractCache.has(key)) {
-            return this.contractCache.get(key) as T;
-        }
+    return instance;
+  }
 
-        let instance: any = await this.contractProvider.get(this.web3.currentProvider, name, address);
+  async getContractInstance(name: string, address?: string):
+      Promise<ContractInstance> {
+    const key = name + (address || 'DEFAULT');
 
-        this.contractCache.set(key, instance);
-
-        return instance as T;
+    if (this.contractCache.has(key)) {
+      return this.contractCache.get(key);
     }
+
+    const instance = await this.getContractAbi(name, address);
+
+    this.contractCache.set(key, instance);
+
+    return instance;
+  }
+
+  private async getContractAbi(name: string, address?: string):
+      Promise<ContractInstance> {
+    const abi = DirtAbi.contracts[name];
+    if (!abi) {
+      throw new Error(`Missing ABI export for ${name}`);
+    }
+
+    const abiWrapper = contract(abi);
+    abiWrapper.setProvider(this.web3.currentProvider);
+
+    console.log(`${name} @ ${address}`);
+
+    return address ? abiWrapper.at(address) : abiWrapper.deployed();
+  }
 }

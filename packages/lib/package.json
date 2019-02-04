@@ -1,14 +1,21 @@
 {
   "name": "@dirt/lib",
-  "version": "0.2.0",
+  "version": "0.2.0-alpha.0",
   "description": "dirt lib",
   "main": "./dist/index.js",
   "scripts": {
-    "prepublish": "",
-    "build": "./node_modules/.bin/tsc -p .",
-    "watch": "./node_modules/.bin/tsc -w -p .",
+    "prepublish": "npm run build",
+    "build": "npx tsc -p .",
+    "watch": "npx tsc -w -p .",
     "watch:migrate": "npm run watch",
-    "clean": "rm -rf dist"
+    "clean": "gts clean",
+    "check": "gts check",
+    "compile": "tsc -p .",
+    "fix": "gts fix",
+    "prepare": "npm run compile",
+    "pretest": "npm run compile",
+    "posttest": "npm run check",
+    "docs": "npx typedoc src"
   },
   "author": "",
   "types": "./dist/index.d.ts",
@@ -23,6 +30,9 @@
   },
   "devDependencies": {
     "@types/bignumber.js": "^5.0.0",
-    "typescript": "^3.3.1"
+    "gts": "^0.9.0",
+    "typedoc": "0.13.0",
+    "typedoc-plugin-internal-external": "^2.0.1",
+    "typescript": "^3.1.6"
   }
 }

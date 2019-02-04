@@ -1,76 +1,75 @@
-import { ScopedVote, BaseVoteController } from "./BaseVote";
-import { PublicVote } from '..';
-import { CommitRevealVote, LockedCommitRevealVote } from './CommitRevealVote';
-import { ContractReader } from '../services/ContractReader';
+import {ContractReader} from '../services/ContractReader';
+
+import {BaseVoteController, Poll} from './BaseVote';
+import {CommitRevealVoteController, LockedCommitRevealVoteController} from './CommitRevealVote';
+import {PublicVoteController} from './PublicVote';
+import {VoteStyle} from './RootRegistry';
 
 
-type ScopedFactoryHandler = (context : ContractReader, address : string) => Promise<BaseVoteController>;
+type ScopedFactoryHandler = (context: ContractReader, address: string) =>
+    Promise<BaseVoteController>;
 
-export class VoteStyleFactoryImpl { 
+/** @internal */
+/** @hidden */
+export class VoteStyleFactoryImpl {
+  private handlers: Map<string, ScopedFactoryHandler> = new Map();
 
-    private handlers : Map<string, ScopedFactoryHandler> = new Map();
-    
-    constructor() { 
-        this.handlers.set("PUBLIC", async(context, address) => { 
-            let contract = await context.getContract<PublicVote>({
-                type: PublicVote,
-                address,
-                name: "PublicVoteController"
-            });
+  constructor() {
+    this.handlers.set(VoteStyle.Public, async (context, address) => {
+      const contract =
+          await context.getContract<PublicVoteController>({type: PublicVoteController, address});
 
-            return contract;
+      return contract;
+    });
+
+    this.handlers.set(VoteStyle.CommitReveal, async (context, address) => {
+      const contract = await context.getContract<CommitRevealVoteController>(
+          {type: CommitRevealVoteController, address});
+
+      return contract;
+    });
+
+    this.handlers.set(
+        VoteStyle.LockedCommitReveal, async (context, address) => {
+          const contract = await context.getContract<LockedCommitRevealVoteController>(
+              {type: LockedCommitRevealVoteController, address});
+
+          return contract;
         });
+  }
 
-        this.handlers.set("COMMIT_REVEAL", async(context, address) => { 
-            let contract = await context.getContract<CommitRevealVote>({
-                type: CommitRevealVote,
-                address,
-                name: "CommitRevealVoteController"
-            });
-
-            return contract;
-        });
-
-        this.handlers.set("LOCKED_COMMIT_REVEAL", async(context, address) => { 
-            let contract = await context.getContract<LockedCommitRevealVote>({
-                type: LockedCommitRevealVote,
-                address,
-                name: "LockedCommitRevealVoteController"
-            });
-
-            return contract;
-        });
+  async createScoped(
+      context: ContractReader, style: string, address: string,
+      id: number): Promise<Poll> {
+    const handler = this.handlers.get(style);
+    if (!handler) {
+      throw new Error('unknown vote style');
     }
 
+    const instance: any = await handler(context, address);
+    return instance.getScoped(id);
+  }
 
-    async createScoped(context : ContractReader, style : string, address : string, id : number) : Promise<ScopedVote> { 
-        let handler = this.handlers.get(style);
-        if(!handler) { 
-            throw new Error("unknown vote style");
-        }
-
-        let instance : any = await handler(context, address);
-        return instance.getScoped(id);
+  async createControllerWithStyle<T extends BaseVoteController>(
+      context: ContractReader, style: string, address: string): Promise<T> {
+    const handler = this.handlers.get(style);
+    if (!handler) {
+      throw new Error('unknown vote style');
     }
 
-    async createControllerWithStyle<T extends BaseVoteController>(context : ContractReader, style : string, address : string) : Promise<T> { 
-        let handler = this.handlers.get(style);
-        if(!handler) { 
-            throw new Error("unknown vote style");
-        }
+    const instance = await handler(context, address);
+    return instance as T;
+  }
 
-        let instance = await handler(context, address);
-        return instance as T;
-    }
+  async createController(context: ContractReader, address: string) {
+    const baseInstance: any =
+        await context.getContractInstance('IVoteController', address);
 
-    async createController(context : ContractReader, address : string) { 
-        let baseInstance : any = await context.getContractInstance("IVoteController", address);
+    const style: string = await baseInstance.getStyleName.call();
 
-        let style : string = await baseInstance.getStyleName.call()
-
-        return await this.createControllerWithStyle(context, style, address);
-    }
-
+    return await this.createControllerWithStyle(context, style, address);
+  }
 }
 
+/* tslint:disable-next-line:variable-name */
 export const VoteStyleFactory = new VoteStyleFactoryImpl();
