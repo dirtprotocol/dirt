@@ -1,0 +1,29 @@
+{
+  "name": "dirt-sample",
+  "version": "0.0.1",
+  "description": "sample project",
+  "main": "./dist/index.js",
+  "scripts": {
+    "prepublish": "npm run build",
+    "build": "node node_modules/typescript/bin/tsc -p .",
+    "watch": "node node_modules/typescript/bin/tsc -w -p .",
+    "clean": "rm -rf dist",
+    "start": "node dist/index.js"
+  },
+  "author": "",
+  "types": "./dist/index.d.ts",
+  "license": "ISC",
+  "dependencies": {
+    "@types/web3": "1.0.14",
+    "@dirt/lib": "0.2.0-alpha.0",
+    "@types/node": "^10.12.10",
+    "bignumber.js": "git+https://github.com/frozeman/bignumber.js-nolookahead.git",
+    "cron": "^1.5.0",
+    "tslib": "^1.9.1",
+    "web3": "1.0.0-beta.37"
+  },
+  "devDependencies": {
+    "@types/bignumber.js": "^5.0.0",
+    "typescript": "^2.8.3"
+  }
+}
