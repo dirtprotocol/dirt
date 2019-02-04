@@ -1,54 +1,53 @@
-import {
-  AsyncEnumerator,
-  IAsyncEnumerableSource
-} from '../util/AsyncEnumerator';
-import { StakableRegistryItem, BaseStakableRegistry } from './StakableRegistry';
-import { TokenValue, TokenSpenderApprovalScope } from './Token';
-import { ScopedVote, IVoteConfiguration } from './BaseVote';
-import { VoteStyleFactory } from './VoteStyleFactory';
-import { TxData } from 'web3';
+import {TxData} from 'web3';
+import {Tx} from 'web3/eth/types';
 
-export class ChallengeableRegistryItem extends StakableRegistryItem {
-  public voteId?: number;
-  public voteContract?: string;
+import {AsyncEnumerator, IAsyncEnumerableSource} from '../util/AsyncEnumerator';
+
+import {VoteConfiguration, Poll} from './BaseVote';
+import {VoteStyle} from './RootRegistry';
+import {BaseStakableRegistry, StakableRegistryItem} from './StakableRegistry';
+import {TokenValue} from './Token';
+import {VoteStyleFactory} from './VoteStyleFactory';
+
+export interface ChallengeableRegistryItem extends StakableRegistryItem {
+  voteId: number;
+  voteContract: string;
 }
 
-export class VoteReference {
-  constructor(
-    public address: string,
-    public voteId: number,
-    public pendingCreastion: boolean
-  ) {}
+export interface VoteInstanceDescriptor {
+  address: string;
+  voteId: number;
+  pendingCreation: boolean;
 }
 
-export class VoteHistory implements IAsyncEnumerableSource<VoteReference> {
+export class VoteHistory implements IAsyncEnumerableSource<VoteInstanceDescriptor> {
   constructor(private instance: any, public stakeHolderAddr: string) {}
 
   async count(): Promise<number> {
     // deprecated
-    // let raw = await this.instance.getVoteHistoryCount.call(this.stakeHolderAddr);
-    return 0;
+    throw new Error('deprecated');
+    // let raw = await
+    // this.instance.getVoteHistoryCount.call(this.stakeHolderAddr);
   }
 
-  async itemAtIndex(index: number): Promise<VoteReference> {
-    let raw = await this.instance.getVoteHistory.call(
-      this.stakeHolderAddr,
-      index
-    );
+  async itemAtIndex(index: number): Promise<VoteInstanceDescriptor> {
+    const raw =
+        await this.instance.getVoteHistory.call(this.stakeHolderAddr, index);
     return this.unpack(raw);
   }
 
-  unpack(value: any[]): VoteReference {
-    return new VoteReference(value[0], value[1], value[2]);
+  unpack(value: any[]): VoteInstanceDescriptor {
+    return {address: value[0], voteId: value[1], pendingCreation: value[2]};
   }
 }
 
-export class ChallengeableRegistry extends BaseStakableRegistry<
-  ChallengeableRegistryItem
-> {
-  public voteStyle: string = '';
-  public voteConfiguration: IVoteConfiguration;
+export class ChallengeableRegistry extends
+    BaseStakableRegistry<ChallengeableRegistryItem> {
+  voteStyle: VoteStyle;
+  voteConfiguration: VoteConfiguration;
 
+  /** @internal */
+  /** @hidden */
   async init(): Promise<void> {
     await super.init();
 
@@ -56,8 +55,11 @@ export class ChallengeableRegistry extends BaseStakableRegistry<
     this.voteConfiguration = await this.getVoteConfiguration();
   }
 
-  private async getVoteConfiguration(): Promise<IVoteConfiguration> {
-    let res = await this.instance.voteConfiguration.call();
+  /**
+   * Returns the vote stake parameters.
+   */
+  async getVoteConfiguration(): Promise<VoteConfiguration> {
+    const res = await this.instance.voteConfiguration.call();
     return {
       challengePenalty: res[1].toNumber(),
       votePenalty: res[2].toNumber(),
@@ -69,113 +71,123 @@ export class ChallengeableRegistry extends BaseStakableRegistry<
   }
 
   protected async unpack(value: any[]): Promise<ChallengeableRegistryItem> {
-    let unpacked = new ChallengeableRegistryItem(
-      this.address,
-      value[0],
-      value[1],
-      value[2],
-      value[3].toNumber(),
-      TokenValue.fromRaw(value[4])
-    );
-
-    let [addr, id] = await this.instance.getActiveVote.call(unpacked.key);
-    unpacked.voteContract = addr
-    unpacked.voteId = id
-
-    return unpacked;
-  }
-
-  public async challenge(
-    key: string,
-    newValue: string,
-    stake: TokenValue,
-    approve_transfer: boolean = true,
-    approvalSuccessCallback: () => void,
-    approvalFailureCallback: () => void,
-    challengeSuccessCallback: () => void,
-    challengeFailureCallback: () => void
-  ): Promise<{
-    voteId: number;
-    contract: string;
-  }> {
-    stake = stake || TokenValue.from(0);
-    let scope: TokenSpenderApprovalScope = TokenSpenderApprovalScope.Empty;
-
-    this.trace.message(
-      `Challenge ${key} @ ${this.address} with "${newValue}" for ${stake.value}`
-    );
-
-    try {
-      const abiEncodedChallengeCall = this.instance.contract.challengeItem.getData(
-        key, newValue, stake.raw, this.dirt.defaultAccount()
-      );
-      await this.dirt.Token.approveAndCall(
-        this.address, stake, abiEncodedChallengeCall
-      );
-      if (challengeSuccessCallback) challengeSuccessCallback();
-    } catch (e) {
-      await scope.revert();
-      if (challengeFailureCallback) challengeFailureCallback();
-      throw e;
-    }
-
-    let [contract, id] = await this.instance.getActiveVote.call(key);
-
-    return {
-      voteId: id,
-      contract: contract
+    const unpacked = {
+      origin: this.address,
+      key: value[0],
+      owner: value[1],
+      value: value[2],
+      timestamp: value[3].toNumber(),
+      stake: TokenValue.fromRaw(value[4])
     };
+
+    const [addr, id] = await this.instance.getActiveVote.call(unpacked.key);
+
+    return {...unpacked, voteContract: addr, voteId: id};
   }
 
+  /**
+   * Creates a `challenge` transaction, which opens a new challenge on an item.
+   * @param key 
+   * @param newValue 
+   * @param stake 
+   */
+  challengeTx(
+      key: string,
+      newValue: string,
+      stake: TokenValue,
+      ): Tx {
+    stake = stake || TokenValue.from(0);
+
+    this.trace.message(`Challenge ${key} @ ${this.address} with "${
+        newValue}" for ${stake.value}`);
+
+    const abiEncodedChallengeCall =
+        this.instance.contract.challengeItem.getData(
+            key, newValue, stake.raw, this.dirt.defaultAccount());
+    return this.dirt.Token.instance.approveAndCall
+        .request(this.address, stake, abiEncodedChallengeCall)
+        .params[0];
+  }
+
+  /**
+   * Sends a `challenge` transaction.
+   * See `challengeTx`.
+   */
+  async challenge(
+      key: string,
+      newValue: string,
+      stake: TokenValue,
+      ): Promise<{voteId: number; contract: string;}> {
+    stake = stake || TokenValue.from(0);
+
+    this.trace.message(`Challenge ${key} @ ${this.address} with "${
+        newValue}" for ${stake.value}`);
+
+    const abiEncodedChallengeCall =
+        this.instance.contract.challengeItem.getData(
+            key, newValue, stake.raw, this.dirt.defaultAccount());
+    await this.dirt.Token.approveAndCall(
+        this.address, stake, abiEncodedChallengeCall);
+
+    const [contract, id] = await this.instance.getActiveVote.call(key);
+
+    return {voteId: id, contract};
+  }
+
+  // Note: hiding these for now since direct edit's broken.
+  /** @internal */
+  /** @hidden */
   editItemTx(key: string, value: string) {
     return this.instance.editItem.request(key, value);
   }
 
-  async editItem(key: string, value: string): Promise<ChallengeableRegistryItem> {
-    let tx = this.editItemTx(key, value)
-    await this.dirt.sendTransaction(<TxData> tx)
+  /** @internal */
+  /** @hidden */
+  async editItem(key: string, value: string):
+      Promise<ChallengeableRegistryItem> {
+    const tx = this.editItemTx(key, value);
+    await this.dirt.sendTransaction(tx as TxData);
     return this.item(key);
   }
 
   //@dev deprecated. Delete when we're feature parity with old UI
-  public getVoteHistoryEnumerator(
-    stakeHolderAddr: string
-  ): AsyncEnumerator<VoteReference> {
-    let voteHistory = new VoteHistory(this.instance, stakeHolderAddr);
-    return new AsyncEnumerator<VoteReference>(voteHistory);
+  /** @internal */
+  /** @hidden */
+  getVoteHistoryEnumerator(stakeHolderAddr: string):
+      AsyncEnumerator<VoteInstanceDescriptor> {
+    const voteHistory = new VoteHistory(this.instance, stakeHolderAddr);
+    return new AsyncEnumerator<VoteInstanceDescriptor>(voteHistory);
   }
 
   //@dev deprecated Delete when we're feature parity with old UI
-  public async getVoteHistoryCount(stakeHolderAddr: string): Promise<number> {
-    let voteHistory = new VoteHistory(this.instance, stakeHolderAddr);
+  /** @internal */
+  /** @hidden */
+  async getVoteHistoryCount(stakeHolderAddr: string): Promise<number> {
+    const voteHistory = new VoteHistory(this.instance, stakeHolderAddr);
     return voteHistory.count();
   }
 
-  public async getVoteInstance<TScoped extends ScopedVote>(
-    key: string
-  ): Promise<TScoped> {
-    let [contract, id] = await this.instance.getActiveVote.call(key);
+  /**
+   * Returns the specified item's active vote.
+   * @param key Registry key of item
+   */
+  async getItemVoteInstance<TVote extends Poll>(key: string):
+      Promise<TVote> {
+    const [contract, id] = await this.instance.getActiveVote.call(key);
 
     if (!contract || !id) {
       throw new Error('Item is not being challenged');
     }
 
     return (await VoteStyleFactory.createScoped(
-      this.dirt.contractCache,
-      this.voteStyle,
-      contract,
-      id
-    )) as TScoped;
+               this.dirt.contractReader, this.voteStyle, contract, id)) as
+        TVote;
   }
 
-  public async getVoteRefInstance<TScoped extends ScopedVote>(
-    voteRef: VoteReference
-  ): Promise<TScoped> {
+  async getVoteInstance<TVote extends Poll>(voteRef: VoteInstanceDescriptor):
+      Promise<TVote> {
     return (await VoteStyleFactory.createScoped(
-      this.dirt.contractCache,
-      this.voteStyle,
-      voteRef.address,
-      voteRef.voteId
-    )) as TScoped;
+               this.dirt.contractReader, this.voteStyle, voteRef.address,
+               voteRef.voteId)) as TVote;
   }
 }

@@ -1,73 +1,41 @@
-import { TokenValue, TokenSpenderApprovalScope } from './Token';
-import {
-  BaseVoteController,
-  TypedScopedVote,
-  Candidate
-} from './BaseVote';
+import {BaseVoteController, Candidate, TypedPoll} from './BaseVote';
+import {TokenSpenderApprovalScope, TokenValue} from './Token';
 
-export class PublicVote extends BaseVoteController {
-  async vote(
-    voteId: number,
-    candidate: Candidate,
-    stake: TokenValue,
-    approve_transfer: boolean = true,
-    approvalSuccessCallback: () => void,
-    approvalFailureCallback: () => void,
-    voteSuccessCallback: () => void,
-    voteFailureCallback: () => void
-  ): Promise<void> {
-    let scope: TokenSpenderApprovalScope = TokenSpenderApprovalScope.Empty;
+export class PublicVoteController extends BaseVoteController {
+  async vote(voteId: number, candidate: Candidate, stake: TokenValue):
+      Promise<void> {
+    this.trace.message(`Vote candidate '${candidate}' on vote '${
+        voteId}' with stake of ${stake}`);
 
-    this.trace.message(
-      `Vote candidate '${candidate}' on vote '${voteId}' with stake of ${stake}`
-    );
-
-    try {
-      const abiEncodedVoteCall = this.instance.contract.vote.getData(
-        voteId, candidate, stake.raw, this.dirt.defaultAccount()
-      );
-      await this.dirt.Token.approveAndCall(
-        this.address, stake, abiEncodedVoteCall
-      );
-      if (voteSuccessCallback) voteSuccessCallback();
-    } catch (e) {
-      await scope.revert();
-      if (voteFailureCallback) voteFailureCallback();
-      throw e;
-    }
+    const abiEncodedVoteCall = this.instance.contract.vote.getData(
+        voteId, candidate, stake.raw, this.dirt.defaultAccount());
+    await this.dirt.Token.approveAndCall(
+        this.address, stake, abiEncodedVoteCall);
   }
 
   async increaseVote(
-    voteId: number,
-    additionalStake: TokenValue,
-    approve_transfer: boolean = true,
-    approvalSuccessCallback: () => void,
-    approvalFailureCallback: () => void,
-    increaseVoteSuccessCallback: () => void,
-    increaseVoteFailureCallback: () => void
-  ): Promise<void> {
-    let scope: TokenSpenderApprovalScope = TokenSpenderApprovalScope.Empty;
+      voteId: number, additionalStake: TokenValue, approveTransfer = true,
+      approvalSuccessCallback: () => void, approvalFailureCallback: () => void,
+      increaseVoteSuccessCallback: () => void,
+      increaseVoteFailureCallback: () => void): Promise<void> {
+    let scope: TokenSpenderApprovalScope = TokenSpenderApprovalScope.EMPTY;
 
-    if (approve_transfer) {
+    if (approveTransfer) {
       try {
         scope = await this.dirt.Token.ensureSpenderApproval(
-          this.address,
-          additionalStake
-        );
+            this.address, additionalStake);
         if (approvalSuccessCallback) approvalSuccessCallback();
       } catch {
         if (approvalFailureCallback) approvalFailureCallback();
       }
     }
 
-    this.trace.message(
-      `Increase existing vote for vote ${voteId} by stake of ${additionalStake}`
-    );
+    this.trace.message(`Increase existing vote for vote ${voteId} by stake of ${
+        additionalStake}`);
 
     try {
-      await this.instance.increaseVote(voteId, additionalStake.raw, {
-        from: this.dirt.defaultAccount()
-      });
+      await this.instance.increaseVote(
+          voteId, additionalStake.raw, {from: this.dirt.defaultAccount()});
       if (increaseVoteSuccessCallback) increaseVoteSuccessCallback();
     } catch (e) {
       await scope.revert();
@@ -81,52 +49,30 @@ export class PublicVote extends BaseVoteController {
   }
 
   async getScoped(voteId: number): Promise<ScopedPublicVote> {
-    let instance = new ScopedPublicVote(this, voteId);
+    const instance = new ScopedPublicVote(this, voteId);
     this.dirt.trace.message(`Creating scoped for ${this.address}/${voteId}`);
     instance.configuration = await this.getVoteConfiguration(voteId);
     return instance;
   }
 }
 
-export class ScopedPublicVote extends TypedScopedVote<PublicVote> {
+export class ScopedPublicVote extends TypedPoll<PublicVoteController> {
   vote(
-    candidate: Candidate,
-    stake: TokenValue,
-    auto_approve: boolean = true,
-    approvalSuccessCallback: () => void,
-    approvalFailureCallback: () => void,
-    increaseVoteSuccessCallback: () => void,
-    increaseVoteFailureCallback: () => void
-  ): Promise<void> {
-    return this.source.vote(
-      this.id,
-      candidate,
-      stake,
-      auto_approve,
-      approvalSuccessCallback,
-      approvalFailureCallback,
-      increaseVoteSuccessCallback,
-      increaseVoteFailureCallback
-    );
+      candidate: Candidate,
+      stake: TokenValue,
+      ): Promise<void> {
+    return this.source.vote(this.voteId, candidate, stake);
   }
 
   increaseVote(
-    additionalStake: TokenValue,
-    auto_approve: boolean = true,
-    approvalSuccessCallback: () => void,
-    approvalFailureCallback: () => void,
-    increaseVoteSuccessCallback: () => void,
-    increaseVoteFailureCallback: () => void
-  ): Promise<void> {
+      additionalStake: TokenValue, autoApprove = true,
+      approvalSuccessCallback: () => void, approvalFailureCallback: () => void,
+      increaseVoteSuccessCallback: () => void,
+      increaseVoteFailureCallback: () => void): Promise<void> {
     return this.source.increaseVote(
-      this.id,
-      additionalStake,
-      auto_approve,
-      approvalSuccessCallback,
-      approvalFailureCallback,
-      increaseVoteSuccessCallback,
-      increaseVoteFailureCallback
-    );
+        this.voteId, additionalStake, autoApprove, approvalSuccessCallback,
+        approvalFailureCallback, increaseVoteSuccessCallback,
+        increaseVoteFailureCallback);
   }
 
   revealActive(): Promise<boolean> {
