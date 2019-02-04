@@ -15,7 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/web3": "1.0.14",
-    "@dirt/lib": "0.2.0-alpha.0",
+    "@dirt/lib": "0.2.0-alpha-0",
     "@types/node": "^10.12.10",
     "bignumber.js": "git+https://github.com/frozeman/bignumber.js-nolookahead.git",
     "cron": "^1.5.0",
