@@ -1,10 +1,10 @@
-import {CallTxDataBase, Transaction, TxData} from 'web3';
-import {Tx} from 'web3/eth/types';
+import { CallTxDataBase, Transaction, TxData } from 'web3';
+import { Tx } from 'web3/eth/types';
 
-import {IAsyncEnumerableSource} from '../util/AsyncEnumerator';
+import { IAsyncEnumerableSource } from '../util/AsyncEnumerator';
 
-import {Registry} from './Registry';
-import {TokenValue} from './Token';
+import { Registry } from './Registry';
+import { TokenValue } from './Token';
 
 /**
  * Describes items stored in the `RootRegistry`.
@@ -31,7 +31,7 @@ export enum VoteStyle {
  * Convenience class for `RootRegistry.sol`.
  */
 export class RootRegistry extends Registry<RegistryDescriptor> implements
-    IAsyncEnumerableSource<RegistryDescriptor> {
+  IAsyncEnumerableSource<RegistryDescriptor> {
   addresses: IKnownAddresses = null;
 
   /** @internal */
@@ -56,8 +56,8 @@ export class RootRegistry extends Registry<RegistryDescriptor> implements
   }
 
   createTx(
-      name: string, style: VoteStyle, minWriteStake: number,
-      minVoteStake: number): Tx {
+    name: string, style: VoteStyle, minWriteStake: number,
+    minVoteStake: number): Tx {
     if (!name || name.length == 0) {
       throw new Error('Name must be defined');
     } else if (!style || style.length == 0) {
@@ -66,23 +66,37 @@ export class RootRegistry extends Registry<RegistryDescriptor> implements
 
     // TODO: This sucks, needs to be tuned
     this.trace.message(
-        `Creating registry ${name} with vote style ${style} with writeStake ${
-            minWriteStake} with minVoteStake ${minVoteStake}`);
+      `Creating registry ${name} with vote style ${style} with writeStake ${
+      minWriteStake} with minVoteStake ${minVoteStake}`);
 
     const minWriteStakeRaw = TokenValue.from(minWriteStake).raw;
     const minVoteStakeRaw = TokenValue.from(minVoteStake).raw;
 
     const request = this.instance.create.request(
-        name, style, minWriteStakeRaw, minVoteStakeRaw);
+      name, style, minWriteStakeRaw, minVoteStakeRaw);
     return request.params[0];
   }
 
   // TODO minStake amounts probably aren't optional
   async create(
-      name: string, style: VoteStyle, minWriteStake: number,
-      minVoteStake: number): Promise<RegistryDescriptor> {
-    const tx = this.createTx(name, style, minWriteStake, minVoteStake);
-    await this.dirt.sendTransaction(tx as TxData);
+    name: string, style: VoteStyle, minWriteStake: number,
+    minVoteStake: number): Promise<RegistryDescriptor> {
+    if (!name || name.length == 0) {
+      throw new Error('Name must be defined');
+    } else if (!style || style.length == 0) {
+      throw new Error('Vote style must be defined');
+    }
+
+    // TODO: This sucks, needs to be tuned
+    this.trace.message(
+      `Creating registry ${name} with vote style ${style} with writeStake ${
+      minWriteStake} with minVoteStake ${minVoteStake}`);
+
+    const minWriteStakeRaw = TokenValue.from(minWriteStake).raw;
+    const minVoteStakeRaw = TokenValue.from(minVoteStake).raw;
+
+    await this.instance.create(
+      name, style, minWriteStakeRaw, minVoteStakeRaw, { from: this.dirt.defaultAccount(), gas: 5000000 });
 
     return await this.item(name);
   }

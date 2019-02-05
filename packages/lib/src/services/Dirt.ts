@@ -150,20 +150,6 @@ export class Dirt {
     return account;
   }
 
-  /** @internal */
-  /** @hidden */
-  async sendTransaction(tx: Tx): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.web3.eth.sendTransaction(<Web3.TxData>tx, (err, result) => {
-        if (err) {
-          reject(err)
-          return
-        }
-        resolve(result)
-      })
-    })
-  }
-
   private async load() {
     // Load the root repository, from this we can discover the rest of the
     // static contracts we need.

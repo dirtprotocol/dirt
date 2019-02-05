@@ -54,8 +54,11 @@ export abstract class Registry<TItem> extends Contract implements
    * @param key Key of item to delete.
    */
   async deleteItem(key: string): Promise<boolean> {
-    const tx = this.deleteItemTx(key);
-    return this.dirt.sendTransaction(tx);
+    return await this.instance.deleteItem(key, {
+      from: this.dirt.defaultAccount(),
+      gas: 5000000,
+      gasLimit: 6721975
+    });
   }
 
   /**

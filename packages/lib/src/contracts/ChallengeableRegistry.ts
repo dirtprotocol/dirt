@@ -145,8 +145,10 @@ export class ChallengeableRegistry extends
   /** @hidden */
   async editItem(key: string, value: string):
       Promise<ChallengeableRegistryItem> {
-    const tx = this.editItemTx(key, value);
-    await this.dirt.sendTransaction(tx as TxData);
+    await this.instance.editItem(key, value, {
+      from: this.dirt.defaultAccount(),
+      gas: 5000000
+    });
     return this.item(key);
   }
 

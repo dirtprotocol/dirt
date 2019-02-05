@@ -52,7 +52,10 @@ export abstract class BaseStakableRegistry<
     const abiEncodedAddItemCall =
         this.instance.contract.addItem.getData(key, value, stake.raw, account);
     return this.dirt.Token.instance.approveAndCall
-        .request(this.address, stake.raw, abiEncodedAddItemCall)
+        .request(this.address, stake.raw, abiEncodedAddItemCall, {
+          from: this.dirt.defaultAccount(),
+          gas: 5000000
+        })
         .params[0];
   }
 
@@ -65,9 +68,14 @@ export abstract class BaseStakableRegistry<
       value: string,
       stake: TokenValue,
       ): Promise<TItem> {
-    const tx = this.addItemTx(key, value, stake, this.dirt.defaultAccount());
-    await this.dirt.sendTransaction(tx)
+    stake = stake || TokenValue.from(0);
 
+    const abiEncodedAddItemCall =
+        this.instance.contract.addItem.getData(key, value, stake.raw, this.dirt.defaultAccount());
+    await this.dirt.Token.instance.approveAndCall(this.address, stake.raw, abiEncodedAddItemCall, {
+          from: this.dirt.defaultAccount(),
+          gas: 5000000
+        })
     return this.item(key);
   }
 
