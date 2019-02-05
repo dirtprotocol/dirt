@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@dirt/lib": "0.2.0-alpha-1",
+    "@dirt/lib": "0.2.0-alpha-2",
     "@material-ui/core": "^3.9.1",
     "@types/jest": "23.3.13",
     "@types/node": "10.12.19",

@@ -14,11 +14,12 @@
   "types": "./dist/index.d.ts",
   "license": "ISC",
   "dependencies": {
-    "@types/web3": "1.0.14",
-    "@dirt/lib": "0.2.0-alpha-1",
+    "@dirt/lib": "0.2.0-alpha-2",
     "@types/node": "^10.12.10",
+    "@types/web3": "1.0.14",
     "bignumber.js": "git+https://github.com/frozeman/bignumber.js-nolookahead.git",
     "cron": "^1.5.0",
+    "truffle-hdwallet-provider": "^1.0.3",
     "tslib": "^1.9.1",
     "web3": "1.0.0-beta.37"
   },
